@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'screens/welcome/screen_welcome.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -17,6 +19,10 @@ class MyApp extends StatelessWidget {
         fontFamily: 'OpenSans',
         primarySwatch: Colors.deepPurple,
       ),
+      initialRoute: ScreenWelcome.routeName,
+      routes: {
+        ScreenWelcome.routeName: (context) => const ScreenWelcome(),
+      },
     );
   }
 }
