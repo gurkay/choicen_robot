@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 class ScreenWelcome extends StatelessWidget {
   static String routeName = '/';
-  const ScreenWelcome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +13,15 @@ class ScreenWelcome extends StatelessWidget {
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.login),
+            tooltip: 'Giris Yapiniz',
           ),
         ],
       ),
       body: Center(
         child: Column(
-          children: [],
+          children: [
+            Text(cAboutChoicenRobot),
+          ],
         ),
       ),
     );

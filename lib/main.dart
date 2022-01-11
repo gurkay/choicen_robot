@@ -1,3 +1,4 @@
+import 'package:choicen_robot/routes/route_generator.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/welcome/screen_welcome.dart';
@@ -9,7 +10,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,8 +21,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: ScreenWelcome.routeName,
       routes: {
-        ScreenWelcome.routeName: (context) => const ScreenWelcome(),
+        ScreenWelcome.routeName: (context) => ScreenWelcome(),
       },
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

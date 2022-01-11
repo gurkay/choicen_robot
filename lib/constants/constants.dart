@@ -8,6 +8,8 @@ const cTitleScreenHome = 'Ana Sayfa';
 const cTitleScreenLogin = 'Giris';
 const cTitleScreenSingUp = 'Kullanici Kayit';
 const cTitleScreenAddCategory = 'Kategori Ekle';
+const cTitleError = 'ERROR';
+const cAboutChoicenRobot = 'Uygulama Hakkinda bilgilendirme buraya girilebilir';
 
 enum LoginStatus {
   notSignIn,
