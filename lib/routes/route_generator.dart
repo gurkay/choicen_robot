@@ -1,7 +1,8 @@
-import 'package:choicen_robot/constants/constants.dart';
-
-import '../screens/welcome/screen_welcome.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/constants.dart';
+import '../screens/login/screen_login.dart';
+import '../screens/welcome/screen_welcome.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -10,7 +11,10 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => ScreenWelcome(),
         );
-
+      case '/screen_login':
+        return MaterialPageRoute(
+          builder: (_) => ScreenLogin(),
+        );
       default:
         return _errorRoute();
     }

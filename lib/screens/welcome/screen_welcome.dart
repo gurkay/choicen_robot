@@ -1,3 +1,5 @@
+import 'package:choicen_robot/screens/login/screen_login.dart';
+
 import '../../constants/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +13,12 @@ class ScreenWelcome extends StatelessWidget {
         title: const Text(cTitleScreenWelcome),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                ScreenLogin.routeName,
+              );
+            },
             icon: const Icon(Icons.login),
             tooltip: 'Giris Yapiniz',
           ),
