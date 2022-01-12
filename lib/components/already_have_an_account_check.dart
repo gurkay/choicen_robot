@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import '../constants/constants.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
-  final bool login;
-  final VoidCallback press;
-  AlreadyHaveAnAccountCheck(
+  final bool? login;
+  final VoidCallback? press;
+  AlreadyHaveAnAccountCheck({
     this.login,
     this.press,
-  );
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +15,13 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          login ? 'Bir kaydiniz yok mu? ' : 'Kaydim var ',
+          login! ? 'Bir kaydiniz yok mu? ' : 'Kaydim var ',
           style: const TextStyle(color: cPrimaryColor),
         ),
         GestureDetector(
           onTap: press,
           child: Text(
-            login ? 'Kayit olun ' : 'Giris yap',
+            login! ? 'Kayit olun ' : 'Giris yap',
             style: const TextStyle(
               color: cPrimaryColor,
               fontWeight: FontWeight.bold,

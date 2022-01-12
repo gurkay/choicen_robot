@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
-  final String text;
-  final VoidCallback press;
-  final Color color, textColor;
-  RoundedButton(
+  final String? text;
+  final VoidCallback? press;
+  final Color? color, textColor;
+  RoundedButton({
     this.text,
     this.press,
     this.color,
     this.textColor,
-  );
+  });
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -20,7 +20,7 @@ class RoundedButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
         child: ElevatedButton(
           child: Text(
-            text,
+            text!,
             style: TextStyle(
               color: textColor,
             ),

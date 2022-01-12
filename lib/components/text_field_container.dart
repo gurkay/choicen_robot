@@ -3,9 +3,7 @@ import '../constants/constants.dart';
 
 class TextFieldContainer extends StatelessWidget {
   final Widget child;
-  const TextFieldContainer(
-    this.child,
-  );
+  TextFieldContainer({required this.child});
 
   @override
   Widget build(BuildContext context) {
