@@ -3,6 +3,7 @@ import 'package:choicen_robot/components/rounded_button.dart';
 import 'package:choicen_robot/components/rounded_input_field.dart';
 import 'package:choicen_robot/components/rounded_password_field.dart';
 import 'package:choicen_robot/models/user.dart';
+import 'package:choicen_robot/screens/singup/screen_singup.dart';
 import 'package:choicen_robot/services/response/response_user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,11 +21,8 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
   LoginStatus _loginStatus = LoginStatus.notSignIn;
   String? _email, _password;
   ResponseUser? _responseUser;
-
-  @override
-  void initState() {
-    super.initState();
-    getPref();
+  _ScreenLoginState() {
+    _responseUser = ResponseUser(this);
   }
 
   getPref() async {
@@ -61,6 +59,12 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
       content: Text(message),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  @override
+  void initState() {
+    getPref();
+    super.initState();
   }
 
   @override
@@ -104,7 +108,12 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
               ),
               SizedBox(height: size.height * 0.03),
               AlreadyHaveAnAccountCheck(
-                press: () {},
+                press: () {
+                  Navigator.pushNamed(
+                    context,
+                    ScreenSingup.routeName,
+                  );
+                },
               )
             ],
           ),

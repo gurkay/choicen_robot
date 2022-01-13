@@ -42,6 +42,7 @@ class DbHelper {
   factory DbHelper() => _instance;
   static Database? _db;
   Future<Database?> get db async {
+    print('get db ::: $_db');
     if (_db != null) {
       return _db;
     }
@@ -50,9 +51,10 @@ class DbHelper {
   }
 
   DbHelper.internal();
+
   Future<Database> initDb() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + 'choicenrobot.db';
+    String path = directory.path + 'choicen_robot.db';
     var choicenRobotDatabase = await openDatabase(
       path,
       version: 2,

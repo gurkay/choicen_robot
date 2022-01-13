@@ -15,9 +15,13 @@ class ScreenSingup extends StatefulWidget {
 }
 
 class _ScreenSingupState extends State<ScreenSingup> implements CallBackUser {
-  User _user = new User('empty', 'empty');
+  String? _userEmail, _userPassword;
 
   ResponseUser? _responseUser;
+
+  _ScreenSingupState() {
+    _responseUser = new ResponseUser(this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +40,14 @@ class _ScreenSingupState extends State<ScreenSingup> implements CallBackUser {
               RoundedInputField(
                 hintText: 'Mail Adresiniz',
                 onChanged: (value) {
-                  _user.userEmail = value;
+                  _userEmail = value;
                 },
               ),
               SizedBox(height: size.height * 0.03),
               RoundedInputField(
                 hintText: 'Sifreniz',
                 onChanged: (value) {
-                  _user.userPassword = value;
+                  _userPassword = value;
                 },
               ),
               SizedBox(height: size.height * 0.03),
@@ -69,7 +73,7 @@ class _ScreenSingupState extends State<ScreenSingup> implements CallBackUser {
   }
 
   void _save() async {
-    await _responseUser!.doInsert(_user);
+    await _responseUser!.doInsert(User(_userEmail, _userPassword));
   }
 
   void _showSnackBar(BuildContext context, String message) {
@@ -82,6 +86,7 @@ class _ScreenSingupState extends State<ScreenSingup> implements CallBackUser {
   @override
   void onUserError(String error) {
     _showSnackBar(context, 'onLoginError ::: $error');
+    print('onLoginError ::: $error');
   }
 
   @override
