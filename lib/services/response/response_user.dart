@@ -21,9 +21,11 @@ class ResponseUser implements IResponse {
   }
 
   @override
-  doInsert(data) {
-    // TODO: implement doInsert
-    throw UnimplementedError();
+  doInsert(dynamic newUser) {
+    requestUser
+        .insert(newUser)
+        .then((value) => _callBackUser.onUserSuccess(newUser))
+        .catchError((onError) => _callBackUser.onUserError(onError.toString()));
   }
 
   @override

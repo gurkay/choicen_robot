@@ -12,9 +12,11 @@ class RequestUser implements IRequest {
   }
 
   @override
-  insert(data) {
-    // TODO: implement insert
-    throw UnimplementedError();
+  Future<User?> insert(dynamic newUser) async {
+    User user = newUser;
+    var db = await dbHelper.db;
+    await db!.insert(dbHelper.userTable, user.toMap());
+    return user;
   }
 
   @override
