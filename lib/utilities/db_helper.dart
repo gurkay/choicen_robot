@@ -42,7 +42,6 @@ class DbHelper {
   factory DbHelper() => _instance;
   static Database? _db;
   Future<Database?> get db async {
-    print('get db ::: $_db');
     if (_db != null) {
       return _db;
     }

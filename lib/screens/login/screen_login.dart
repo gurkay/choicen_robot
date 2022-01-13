@@ -3,6 +3,7 @@ import 'package:choicen_robot/components/rounded_button.dart';
 import 'package:choicen_robot/components/rounded_input_field.dart';
 import 'package:choicen_robot/components/rounded_password_field.dart';
 import 'package:choicen_robot/models/user.dart';
+import 'package:choicen_robot/screens/home/screen_home.dart';
 import 'package:choicen_robot/screens/singup/screen_singup.dart';
 import 'package:choicen_robot/services/response/response_user.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,6 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
   setPref(User user) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
-      sharedPreferences.setInt('userId', user.userId);
       sharedPreferences.setString('userEmail', user.userEmail);
       sharedPreferences.setString('userPassword', user.userPassword);
     });
@@ -73,7 +73,7 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
       case LoginStatus.notSignIn:
         return loginStatusNotSignIn();
       case LoginStatus.signIn:
-        return Text('Giris');
+        return ScreenHome();
     }
   }
 
