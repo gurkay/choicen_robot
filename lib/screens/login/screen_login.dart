@@ -130,5 +130,8 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
   @override
   void onUserSuccess(User user) {
     setPref(user);
+    setState(() {
+      _loginStatus = LoginStatus.signIn;
+    });
   }
 }
