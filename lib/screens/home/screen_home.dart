@@ -1,10 +1,14 @@
 import 'package:choicen_robot/models/user.dart';
+import 'package:choicen_robot/screens/home/components/category_list.dart';
+import 'package:choicen_robot/services/response/response_category.dart';
 import 'package:choicen_robot/services/response/response_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/constants.dart';
 import '../../models/category.dart';
 import 'package:flutter/material.dart';
+
+import 'components/new_category.dart';
 
 class ScreenHome extends StatefulWidget {
   static String routeName = '/screen_home';
@@ -17,32 +21,69 @@ class ScreenHome extends StatefulWidget {
   _ScreenHomeState createState() => _ScreenHomeState();
 }
 
-class _ScreenHomeState extends State<ScreenHome> implements CallBackUser {
-  ResponseUser? _responseUser;
+class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
+  ResponseCategory? _responseCategory;
   _ScreenHomeState() {
-    _responseUser = new ResponseUser(this);
+    _responseCategory = ResponseCategory(this);
   }
 
-  final List<Category> _userCategories = [];
-  User _user = new User('_userEmail', '_userPassword');
+  late List<Category> _userCategories = [];
+  Category? _category;
+  void _addNewCategory(String txCategoryName) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-  void _addNewCategory(String txCategoryName) {
-    final newTx = Category(_user.userId, txCategoryName);
-    print('screen_home:::_userCategories:::userId:::${_user.userId}');
+    print('screen_home:::_addNewCategory:::txCategoryName:::${txCategoryName}');
+    print(
+        'screen_home:::_addNewCategory:::${sharedPreferences.getInt('userId')}');
+    print(
+        'screen_home:::_addNewCategory:::${sharedPreferences.getString('userEmail')}');
+    print(
+        'screen_home:::_addNewCategory:::${sharedPreferences.getString('userPassword')}');
+    await _responseCategory!.doInsert(
+      Category(
+        sharedPreferences.getInt('userId'),
+        txCategoryName,
+      ),
+    );
+    print('screen_home:::_category!.categoryId:::${_category!.categoryId}');
+    final newTx = Category.withCategoryId(
+      _category!.categoryId,
+      sharedPreferences.getInt('userId'),
+      txCategoryName,
+    );
+
     setState(() {
       _userCategories.add(newTx);
     });
   }
 
-  getPref() async {
+  void _startAddNewCategory(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewCategory(_addNewCategory),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
+  void _deleteCategory(int id) {
+    setState(() {
+      _userCategories.removeWhere((category) => category.categoryId == id);
+    });
+  }
+
+  getCategoryList() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await _responseUser!.doRead(User(sharedPreferences.getString('userEmail'),
-        sharedPreferences.getString('password')));
+    await _responseCategory!.doListCategory(sharedPreferences.getInt('userId'));
   }
 
   @override
   void initState() {
-    getPref();
+    getCategoryList();
     super.initState();
   }
 
@@ -63,25 +104,45 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackUser {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [],
+          children: [
+            CategoryList(
+              categories: _userCategories,
+              deleteTx: _deleteCategory,
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => _startAddNewCategory(context),
       ),
     );
   }
 
   @override
-  void onUserError(String error) {
-    print('onLoginError ::: $error');
+  void onErrorCategory(String error) {
+    print('screen_home ::: onErrorCategory ::: $error');
   }
 
   @override
-  void onUserSuccess(User user) {
+  void onSuccessCategory(Category category) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    print(
+        'screen_home:::onUserSuccess:::${sharedPreferences.getInt('userId')}');
+    print(
+        'screen_home:::onUserSuccess:::${sharedPreferences.getString('userEmail')}');
+    print(
+        'screen_home:::onUserSuccess:::${sharedPreferences.getString('userPassword')}');
+
     setState(() {
-      this._user = user;
+      this._category = category;
+    });
+  }
+
+  @override
+  void onSuccessDoListCategory(List<Category> category) {
+    setState(() {
+      this._userCategories = category;
     });
   }
 }

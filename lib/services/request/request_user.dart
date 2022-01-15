@@ -13,13 +13,11 @@ class RequestUser implements IRequest {
 
   @override
   Future<User> insert(dynamic user) async {
-    print('request_user:::insert:::userEmail: ${user.userEmail}');
-    print('request_user:::insert:::userPassword: ${user.userPassword}');
     var db = await dbHelper.db;
     var result = await db!.insert(dbHelper.userTable, user.toMap());
-    print('request_user:::insert:::result: ${result}');
+
     User _user = User.withUserId(result, user.userEmail, user.userPassword);
-    print('request_user:::insert:::_user: ${_user.userId}');
+
     return _user;
   }
 
@@ -32,11 +30,7 @@ class RequestUser implements IRequest {
       where: '${dbHelper.colUserEmail} = ? and ${dbHelper.colUserPassword} = ?',
       whereArgs: [user.userEmail, user.userPassword],
     );
-    var count = result!.length;
-    for (var i = 0; i < count; i++) {
-      _listUser.add(User.fromMapObject(result[i]));
-    }
-    return User.fromMapObject(result[0]);
+    return User.fromMapObject(result!.first);
   }
 
   @override
