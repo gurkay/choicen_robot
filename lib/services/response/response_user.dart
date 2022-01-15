@@ -24,7 +24,7 @@ class ResponseUser implements IResponse {
   doInsert(dynamic newUser) {
     requestUser
         .insert(newUser)
-        .then((value) => _callBackUser.onUserSuccess(newUser))
+        .then((value) => _callBackUser.onUserSuccess(value))
         .catchError((onError) => _callBackUser.onUserError(onError.toString()));
   }
 
@@ -32,7 +32,7 @@ class ResponseUser implements IResponse {
   doRead(dynamic findUser) {
     requestUser
         .read(findUser)
-        .then((value) => _callBackUser.onUserSuccess(findUser))
+        .then((value) => _callBackUser.onUserSuccess(value))
         .catchError((onError) => _callBackUser.onUserError(onError.toString()));
   }
 

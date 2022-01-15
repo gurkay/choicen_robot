@@ -38,6 +38,7 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
   setPref(User user) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
+      sharedPreferences.setInt('userId', user.userId);
       sharedPreferences.setString('userEmail', user.userEmail);
       sharedPreferences.setString('userPassword', user.userPassword);
     });
@@ -61,6 +62,12 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  singOut() async {
+    setState(() {
+      _loginStatus = LoginStatus.notSignIn;
+    });
+  }
+
   @override
   void initState() {
     getPref();
@@ -73,7 +80,9 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
       case LoginStatus.notSignIn:
         return loginStatusNotSignIn();
       case LoginStatus.signIn:
-        return ScreenHome();
+        return ScreenHome(
+          signOut: singOut,
+        );
     }
   }
 
@@ -129,6 +138,7 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
 
   @override
   void onUserSuccess(User user) {
+    print('screen_login::: ${user.userId}');
     setPref(user);
     setState(() {
       _loginStatus = LoginStatus.signIn;

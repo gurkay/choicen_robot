@@ -12,28 +12,31 @@ class RequestUser implements IRequest {
   }
 
   @override
-  Future<User?> insert(dynamic newUser) async {
-    User user = newUser;
+  Future<User> insert(dynamic user) async {
+    print('request_user:::insert:::userEmail: ${user.userEmail}');
+    print('request_user:::insert:::userPassword: ${user.userPassword}');
     var db = await dbHelper.db;
-    await db!.insert(dbHelper.userTable, user.toMap());
-    return user;
+    var result = await db!.insert(dbHelper.userTable, user.toMap());
+    print('request_user:::insert:::result: ${result}');
+    User _user = User.withUserId(result, user.userEmail, user.userPassword);
+    print('request_user:::insert:::_user: ${_user.userId}');
+    return _user;
   }
 
   @override
-  Future<List<User>> read(dynamic findUser) async {
-    User fUser = findUser;
-    List<User> user = <User>[];
+  Future<User> read(dynamic user) async {
+    List<User> _listUser = <User>[];
     var db = await dbHelper.db;
     List<Map<String, Object?>>? result = await db?.query(
       dbHelper.userTable,
       where: '${dbHelper.colUserEmail} = ? and ${dbHelper.colUserPassword} = ?',
-      whereArgs: [fUser.userEmail, fUser.userPassword],
+      whereArgs: [user.userEmail, user.userPassword],
     );
     var count = result!.length;
     for (var i = 0; i < count; i++) {
-      user.add(User.fromMapObject(result[i]));
+      _listUser.add(User.fromMapObject(result[i]));
     }
-    return user;
+    return User.fromMapObject(result[0]);
   }
 
   @override

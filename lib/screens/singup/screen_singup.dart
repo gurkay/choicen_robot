@@ -85,12 +85,13 @@ class _ScreenSingupState extends State<ScreenSingup> implements CallBackUser {
 
   @override
   void onUserError(String error) {
-    _showSnackBar(context, 'onLoginError ::: $error');
-    print('onLoginError ::: $error');
+    _showSnackBar(context, 'onSingupError ::: $error');
+    print('onSingUpError ::: onUserError ::: $error');
   }
 
   @override
   void onUserSuccess(User user) {
+    print('screen_singup:::onUserSuccess:::userId: ${user.userId}');
     _showSnackBar(context, 'Kayit basarili');
   }
 }

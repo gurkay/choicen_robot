@@ -23,7 +23,9 @@ class RouteGenerator {
         );
       case '/screen_home':
         return MaterialPageRoute(
-          builder: (_) => ScreenHome(),
+          builder: (_) => ScreenHome(
+            signOut: () => VoidCallback,
+          ),
         );
       default:
         return _errorRoute();
