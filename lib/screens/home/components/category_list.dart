@@ -11,8 +11,9 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
-      height: 450,
+      height: size.height * 0.85,
       child: categories.isEmpty
           ? Column(
               children: [Text('Kategori ekleyiniz')],

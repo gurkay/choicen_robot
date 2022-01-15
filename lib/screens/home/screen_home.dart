@@ -70,7 +70,9 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
     );
   }
 
-  void _deleteCategory(int id) {
+  void _deleteCategory(int id) async {
+    await _responseCategory!.doDelete(id);
+
     setState(() {
       _userCategories.removeWhere((category) => category.categoryId == id);
     });
@@ -141,8 +143,15 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
 
   @override
   void onSuccessDoListCategory(List<Category> category) {
+    print(
+        'screen_home:::onSuccessDoListCategory:::${category[0].categoryName}');
     setState(() {
       this._userCategories = category;
     });
+  }
+
+  @override
+  void onSuccessDoDeleteCategory(int result) {
+    print('screen_home ::: onSuccessDoDeleteCategory ::: $result');
   }
 }

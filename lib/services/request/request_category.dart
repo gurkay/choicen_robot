@@ -5,9 +5,14 @@ import 'package:choicen_robot/utilities/i_request.dart';
 class RequestCategory implements IRequest {
   DbHelper dbHelper = new DbHelper();
   @override
-  delete(data) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<int> delete(dynamic categoryId) async {
+    var db = await dbHelper.db;
+    var result = await db!.delete(
+      dbHelper.categoryTable,
+      where: '${dbHelper.colCategoryId} = ?',
+      whereArgs: [categoryId],
+    );
+    return result;
   }
 
   @override
@@ -38,7 +43,7 @@ class RequestCategory implements IRequest {
     List<Category> category = <Category>[];
     var db = await dbHelper.db;
     List<Map<String, Object?>> result = await db!.query(
-      dbHelper.calculateTable,
+      dbHelper.categoryTable,
       where: '${dbHelper.colUserId} = ?',
       whereArgs: [userId],
     );

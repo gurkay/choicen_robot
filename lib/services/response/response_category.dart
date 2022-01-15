@@ -5,6 +5,7 @@ import 'package:choicen_robot/utilities/i_response.dart';
 abstract class CallBackCategory {
   void onSuccessCategory(Category category);
   void onSuccessDoListCategory(List<Category> category);
+  void onSuccessDoDeleteCategory(int result);
   void onErrorCategory(String error);
 }
 
@@ -14,9 +15,12 @@ class ResponseCategory implements IResponse {
   RequestCategory requestCategory = new RequestCategory();
 
   @override
-  doDelete(data) {
-    // TODO: implement doDelete
-    throw UnimplementedError();
+  doDelete(dynamic categoryId) {
+    requestCategory
+        .delete(categoryId)
+        .then((value) => _callBackCategory.onSuccessDoDeleteCategory(value))
+        .catchError(
+            (onError) => _callBackCategory.onErrorCategory(onError.toString()));
   }
 
   @override
