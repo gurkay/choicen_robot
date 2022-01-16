@@ -3,11 +3,27 @@ import 'package:flutter/material.dart';
 
 class CategoryList extends StatelessWidget {
   final List<Category> categories;
-  final Function deleteTx;
+  final Function navigateButton;
   CategoryList(
     this.categories,
-    this.deleteTx,
+    this.navigateButton,
   );
+
+  static const menuItems = <String>[
+    'Secenekler',
+    'Nitelikler',
+    'Hesapla',
+    'Sil',
+  ];
+
+  final List<PopupMenuItem<String>> _popUpMenuItems = menuItems
+      .map(
+        (String value) => PopupMenuItem<String>(
+          value: value,
+          child: Text(value),
+        ),
+      )
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +38,22 @@ class CategoryList extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 return Card(
                   elevation: 5,
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                     vertical: 8,
                     horizontal: 5,
                   ),
                   child: ListTile(
                     title: Text('${categories[index].categoryName}'),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      color: Theme.of(context).errorColor,
-                      onPressed: () => deleteTx(categories[index].categoryId),
+                    trailing: PopupMenuButton<String>(
+                      onSelected: (String newValue) {
+                        navigateButton(
+                          ctx,
+                          newValue,
+                          categories[index],
+                          categories[index].categoryId,
+                        );
+                      },
+                      itemBuilder: (BuildContext context) => _popUpMenuItems,
                     ),
                   ),
                 );

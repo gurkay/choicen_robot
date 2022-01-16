@@ -8,6 +8,7 @@ const cTitleScreenHome = 'Ana Sayfa';
 const cTitleScreenLogin = 'Giris';
 const cTitleScreenSingUp = 'Kullanici Kayit';
 const cTitleScreenAddCategory = 'Kategori Ekle';
+const cTitleScreenActivity = 'Secenekler';
 const cTitleError = 'ERROR';
 const cAboutChoicenRobot = 'Uygulama Hakkinda bilgilendirme buraya girilebilir';
 

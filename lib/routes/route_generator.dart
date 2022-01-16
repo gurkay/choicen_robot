@@ -1,3 +1,5 @@
+import 'package:choicen_robot/screens/activity/screen_activity.dart';
+
 import '../screens/singup/screen_singup.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +10,7 @@ import '../screens/home/screen_home.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
+    dynamic args = routeSettings.arguments;
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(
@@ -25,6 +28,12 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => ScreenHome(
             signOut: () => VoidCallback,
+          ),
+        );
+      case '/screen_activity':
+        return MaterialPageRoute(
+          builder: (_) => ScreenActivity(
+            category: args,
           ),
         );
       default:

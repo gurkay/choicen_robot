@@ -1,4 +1,5 @@
 import 'package:choicen_robot/models/user.dart';
+import 'package:choicen_robot/screens/activity/screen_activity.dart';
 import 'package:choicen_robot/screens/home/components/category_list.dart';
 import 'package:choicen_robot/services/response/response_category.dart';
 import 'package:choicen_robot/services/response/response_user.dart';
@@ -28,7 +29,7 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
   }
 
   List<Category> _userCategories = [];
-  Category? _category;
+  Category _category = Category(0, '');
 
   void _addNewCategory(String txCategoryName) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -51,7 +52,7 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
     getCategoryList();
 
     final newTx = Category.withCategoryId(
-      _category!.categoryId,
+      _category.categoryId,
       sharedPreferences.getInt('userId'),
       txCategoryName,
     );
@@ -80,6 +81,39 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
     setState(() {
       _userCategories.removeWhere((category) => category.categoryId == id);
     });
+  }
+
+  void _navigateButton(
+    BuildContext context,
+    String buttonSelected,
+    Category category,
+    int id,
+  ) {
+    switch (buttonSelected) {
+      case 'Secenekler':
+        Navigator.pushNamed(
+          context,
+          ScreenActivity.routeName,
+          arguments: category,
+        );
+        break;
+      case 'Nitelikler':
+        // Navigator.pushNamed(
+        //   context,
+        //   ScreenAddCategory.routeName,
+        //   arguments: ScreenArguments(
+        //     cTitleScreenAddCategory,
+        //     category,
+        //   ),
+        // );
+        break;
+      case 'Hesapla':
+        break;
+      case 'Sil':
+        _deleteCategory(id);
+        break;
+      default:
+    }
   }
 
   getCategoryList() async {
@@ -113,7 +147,8 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
           children: [
             CategoryList(
               _userCategories,
-              _deleteCategory,
+              _navigateButton,
+              //_deleteCategory,
             ),
           ],
         ),
