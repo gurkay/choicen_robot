@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class CategoryList extends StatelessWidget {
   final List<Category> categories;
   final Function deleteTx;
-  CategoryList({
-    required this.categories,
-    required this.deleteTx,
-  });
+  CategoryList(
+    this.categories,
+    this.deleteTx,
+  );
 
   @override
   Widget build(BuildContext context) {

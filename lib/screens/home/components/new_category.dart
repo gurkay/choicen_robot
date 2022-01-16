@@ -38,14 +38,14 @@ class _NewCategoryState extends State<NewCategory> {
       child: Card(
         elevation: 5,
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RoundedInputField(
                 hintText: 'Kategori',
                 controller: _controllerCategoryName,
-                onChanged: (_) => _submitData(),
+                onChanged: (_) => _submitData,
               ),
               RoundedButton(
                 text: 'Ekle',

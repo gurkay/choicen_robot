@@ -27,8 +27,9 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
     _responseCategory = ResponseCategory(this);
   }
 
-  late List<Category> _userCategories = [];
+  List<Category> _userCategories = [];
   Category? _category;
+
   void _addNewCategory(String txCategoryName) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -39,13 +40,16 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
         'screen_home:::_addNewCategory:::${sharedPreferences.getString('userEmail')}');
     print(
         'screen_home:::_addNewCategory:::${sharedPreferences.getString('userPassword')}');
+    // print('screen_home:::_category!.categoryId:::${_category!.categoryId}');
     await _responseCategory!.doInsert(
       Category(
         sharedPreferences.getInt('userId'),
         txCategoryName,
       ),
     );
-    print('screen_home:::_category!.categoryId:::${_category!.categoryId}');
+
+    getCategoryList();
+
     final newTx = Category.withCategoryId(
       _category!.categoryId,
       sharedPreferences.getInt('userId'),
@@ -108,8 +112,8 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CategoryList(
-              categories: _userCategories,
-              deleteTx: _deleteCategory,
+              _userCategories,
+              _deleteCategory,
             ),
           ],
         ),
@@ -127,15 +131,7 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
   }
 
   @override
-  void onSuccessCategory(Category category) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    print(
-        'screen_home:::onUserSuccess:::${sharedPreferences.getInt('userId')}');
-    print(
-        'screen_home:::onUserSuccess:::${sharedPreferences.getString('userEmail')}');
-    print(
-        'screen_home:::onUserSuccess:::${sharedPreferences.getString('userPassword')}');
-
+  void onSuccessDoInsertCategory(Category category) {
     setState(() {
       this._category = category;
     });
@@ -143,8 +139,6 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
 
   @override
   void onSuccessDoListCategory(List<Category> category) {
-    print(
-        'screen_home:::onSuccessDoListCategory:::${category[0].categoryName}');
     setState(() {
       this._userCategories = category;
     });

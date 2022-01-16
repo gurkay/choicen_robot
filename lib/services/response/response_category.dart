@@ -3,7 +3,7 @@ import 'package:choicen_robot/services/request/request_category.dart';
 import 'package:choicen_robot/utilities/i_response.dart';
 
 abstract class CallBackCategory {
-  void onSuccessCategory(Category category);
+  void onSuccessDoInsertCategory(Category category);
   void onSuccessDoListCategory(List<Category> category);
   void onSuccessDoDeleteCategory(int result);
   void onErrorCategory(String error);
@@ -27,7 +27,7 @@ class ResponseCategory implements IResponse {
   doInsert(dynamic category) {
     requestCategory
         .insert(category)
-        .then((value) => _callBackCategory.onSuccessCategory(value))
+        .then((value) => _callBackCategory.onSuccessDoInsertCategory(value))
         .catchError(
             (onError) => _callBackCategory.onErrorCategory(onError.toString()));
   }
