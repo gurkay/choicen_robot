@@ -1,8 +1,8 @@
-import 'package:choicen_robot/screens/activity/screen_activity.dart';
-
-import '../screens/singup/screen_singup.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/activity/screen_activity.dart';
+import '../screens/criteria/screen_criteria.dart';
+import '../screens/singup/screen_singup.dart';
 import '../constants/constants.dart';
 import '../screens/login/screen_login.dart';
 import '../screens/welcome/screen_welcome.dart';
@@ -34,6 +34,12 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => ScreenActivity(
             category: args,
+          ),
+        );
+      case '/screen_criteria':
+        return MaterialPageRoute(
+          builder: (_) => ScreenCriteria(
+            criteria: args,
           ),
         );
       default:
