@@ -100,16 +100,20 @@ class _ScreenCriteriaState extends State<ScreenCriteria>
 
   @override
   void onSuccessDoDeleteCriteria(int result) {
-    // TODO: implement onSuccessDoDeleteCriteria
+    print('screen_criteria:::onSuccessDoDeleteCriteria:::$result');
   }
 
   @override
   void onSuccessDoInsertCriteria(Criteria criteria) {
-    // TODO: implement onSuccessDoInsertCriteria
+    setState(() {
+      _criteria = criteria;
+    });
   }
 
   @override
   void onSuccessDoListCriteria(List<Criteria> criterias) {
-    // TODO: implement onSuccessDoListCriteria
+    setState(() {
+      _categoryCriterias = criterias;
+    });
   }
 }

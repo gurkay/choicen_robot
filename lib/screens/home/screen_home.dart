@@ -1,5 +1,6 @@
 import 'package:choicen_robot/models/user.dart';
 import 'package:choicen_robot/screens/activity/screen_activity.dart';
+import 'package:choicen_robot/screens/criteria/screen_criteria.dart';
 import 'package:choicen_robot/screens/home/components/category_list.dart';
 import 'package:choicen_robot/services/response/response_category.dart';
 import 'package:choicen_robot/services/response/response_user.dart';
@@ -98,14 +99,11 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
         );
         break;
       case 'Nitelikler':
-        // Navigator.pushNamed(
-        //   context,
-        //   ScreenAddCategory.routeName,
-        //   arguments: ScreenArguments(
-        //     cTitleScreenAddCategory,
-        //     category,
-        //   ),
-        // );
+        Navigator.pushNamed(
+          context,
+          ScreenCriteria.routeName,
+          arguments: category,
+        );
         break;
       case 'Hesapla':
         break;
