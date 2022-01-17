@@ -2,7 +2,7 @@ class Criteria {
   int? _criteriaId;
   int? _categoryId;
   String? _criteriaName;
-  bool? _criteriaBigValuePerfect;
+  int? _criteriaBigValuePerfect;
 
   Criteria(
     this._categoryId,
@@ -33,8 +33,8 @@ class Criteria {
     }
   }
 
-  bool get criteriaBigValuePerfect => _criteriaBigValuePerfect ?? true;
-  set criteriaBigValuePerfect(bool newCriteriaBigValuePerfect) {
+  int get criteriaBigValuePerfect => _criteriaBigValuePerfect ?? 0;
+  set criteriaBigValuePerfect(int newCriteriaBigValuePerfect) {
     this._criteriaBigValuePerfect = newCriteriaBigValuePerfect;
   }
 

@@ -1,21 +1,91 @@
+import 'package:choicen_robot/models/category.dart';
 import 'package:choicen_robot/models/criteria.dart';
+import 'package:choicen_robot/screens/criteria/components/new_criteria.dart';
+import 'package:choicen_robot/services/response/response_criteria.dart';
 import 'package:flutter/material.dart';
 
 class ScreenCriteria extends StatefulWidget {
   static String routeName = '/screen_criteria';
-  final Criteria criteria;
+  final Category category;
 
-  ScreenCriteria({required this.criteria});
+  ScreenCriteria({required this.category});
 
   @override
-  _ScreenCriteriaState createState() => _ScreenCriteriaState(criteria);
+  _ScreenCriteriaState createState() => _ScreenCriteriaState(category);
 }
 
-class _ScreenCriteriaState extends State<ScreenCriteria> {
-  Criteria _criteria;
-  _ScreenCriteriaState(this._criteria);
+class _ScreenCriteriaState extends State<ScreenCriteria>
+    implements CallBackCriteria {
+  Category _category;
+  ResponseCriteria? _responseCriteria;
+  _ScreenCriteriaState(this._category) {
+    _responseCriteria = ResponseCriteria(this);
+  }
+
+  List<Criteria> _categoryCriterias = [];
+  Criteria _criteria = new Criteria(0, '', 1);
+
+  void _addNewCriteria(String txCriteriaName, int cmbBigValuePerfect) async {
+    await _responseCriteria!.doInsert(
+        Criteria(_category.categoryId, txCriteriaName, cmbBigValuePerfect));
+    getCriteriasList();
+    final newTx = Criteria.withCriteriaId(
+      _criteria.criteriaId,
+      _category.categoryId,
+      txCriteriaName,
+      cmbBigValuePerfect,
+    );
+
+    setState(() {
+      _categoryCriterias.add(newTx);
+    });
+  }
+
+  void _startAddCriteria(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewCriteria(_addNewCriteria),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
+  getCriteriasList() async {
+    await _responseCriteria!.doListCriteria(_category.categoryId);
+  }
+
+  @override
+  void initState() {
+    getCriteriasList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container();
+  }
+
+  @override
+  void onErrorCriteria(String error) {
+    print('screen_criteria:::onErrorCriteria:::$error');
+  }
+
+  @override
+  void onSuccessDoDeleteCriteria(int result) {
+    // TODO: implement onSuccessDoDeleteCriteria
+  }
+
+  @override
+  void onSuccessDoInsertCriteria(Criteria criteria) {
+    // TODO: implement onSuccessDoInsertCriteria
+  }
+
+  @override
+  void onSuccessDoListCriteria(List<Criteria> criterias) {
+    // TODO: implement onSuccessDoListCriteria
   }
 }

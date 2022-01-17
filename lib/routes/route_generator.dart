@@ -39,7 +39,7 @@ class RouteGenerator {
       case '/screen_criteria':
         return MaterialPageRoute(
           builder: (_) => ScreenCriteria(
-            criteria: args,
+            category: args,
           ),
         );
       default:

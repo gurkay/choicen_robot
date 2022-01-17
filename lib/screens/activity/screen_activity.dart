@@ -41,7 +41,7 @@ class _ScreenActivityState extends State<ScreenActivity>
     getActivitiesList();
 
     final newTx = Activity.withActivityId(
-      _category.categoryId,
+      _activity.activityId,
       _category.categoryId,
       txActivityName,
     );

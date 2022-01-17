@@ -44,7 +44,7 @@ class ResponseCriteria implements IResponse {
     throw UnimplementedError();
   }
 
-  doListActivity(dynamic categoryId) {
+  doListCriteria(dynamic categoryId) {
     requestCriteria
         .getListCriterias(categoryId)
         .then((value) => _callBackCriteria.onSuccessDoListCriteria(value))
