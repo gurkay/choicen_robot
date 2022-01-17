@@ -20,10 +20,14 @@ class _NewCriteriaState extends State<NewCriteria> {
       return;
     }
     final enteredCriteriaName = _controllerCriteriaName.text;
+    final enteredBigValuePerfect = _dropDownValue;
     if (enteredCriteriaName.isEmpty) {
       return;
     }
-    widget.addTx(enteredCriteriaName);
+    widget.addTx(
+      enteredCriteriaName,
+      int.parse(enteredBigValuePerfect),
+    );
     Navigator.of(context).pop();
   }
 

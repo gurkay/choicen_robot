@@ -9,6 +9,7 @@ const cTitleScreenLogin = 'Giris';
 const cTitleScreenSingUp = 'Kullanici Kayit';
 const cTitleScreenAddCategory = 'Kategori Ekle';
 const cTitleScreenActivity = 'Secenekler';
+const cTitleScreenCriteria = 'Nitelikler';
 const cTitleError = 'ERROR';
 const cAboutChoicenRobot = 'Uygulama Hakkinda bilgilendirme buraya girilebilir';
 

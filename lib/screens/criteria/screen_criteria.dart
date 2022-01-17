@@ -1,5 +1,7 @@
+import 'package:choicen_robot/constants/constants.dart';
 import 'package:choicen_robot/models/category.dart';
 import 'package:choicen_robot/models/criteria.dart';
+import 'package:choicen_robot/screens/criteria/components/criteria_list.dart';
 import 'package:choicen_robot/screens/criteria/components/new_criteria.dart';
 import 'package:choicen_robot/services/response/response_criteria.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,13 @@ class _ScreenCriteriaState extends State<ScreenCriteria>
     );
   }
 
+  void _deleteCriteria(int id) async {
+    await _responseCriteria!.doDelete(id);
+    setState(() {
+      _categoryCriterias.removeWhere((criteria) => criteria.criteriaId == id);
+    });
+  }
+
   getCriteriasList() async {
     await _responseCriteria!.doListCriteria(_category.categoryId);
   }
@@ -66,7 +75,22 @@ class _ScreenCriteriaState extends State<ScreenCriteria>
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(cTitleScreenCriteria),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CriteriaList(
+              _categoryCriterias,
+              _deleteCriteria,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
