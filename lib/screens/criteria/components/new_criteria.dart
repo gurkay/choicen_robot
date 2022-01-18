@@ -13,20 +13,24 @@ class NewCriteria extends StatefulWidget {
 class _NewCriteriaState extends State<NewCriteria> {
   final _controllerCriteriaName = TextEditingController();
   final List<String> _bigValuePerfect = ['Evet', 'Hayir'];
-  String _dropDownValue = '';
+  final Map<String, int> _mapBigValuePerfect = {
+    'Evet': 1,
+    'Hayir': 0,
+  };
+  String _dropDownValue = 'Evet';
 
   void _submitData() {
     if (_controllerCriteriaName.text.isEmpty) {
       return;
     }
     final enteredCriteriaName = _controllerCriteriaName.text;
-    final enteredBigValuePerfect = _dropDownValue;
+    final enteredBigValuePerfect = _mapBigValuePerfect[_dropDownValue];
     if (enteredCriteriaName.isEmpty) {
       return;
     }
     widget.addTx(
       enteredCriteriaName,
-      int.parse(enteredBigValuePerfect),
+      enteredBigValuePerfect,
     );
     Navigator.of(context).pop();
   }
@@ -46,20 +50,27 @@ class _NewCriteriaState extends State<NewCriteria> {
                 controller: _controllerCriteriaName,
                 onChanged: (_) => _submitData,
               ),
-              Text('Degerin Yuksek Olmasi Iyidir:'),
-              DropdownButton(
-                items: _bigValuePerfect
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _dropDownValue = newValue!;
-                  });
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text('Degerin Yuksek Olmasi Iyidir : '),
+                  DropdownButton(
+                    value: _dropDownValue,
+                    items: _bigValuePerfect.map<DropdownMenuItem<String>>(
+                      (String value) {
+                        return DropdownMenuItem(
+                          value: value,
+                          child: Text(value),
+                        );
+                      },
+                    ).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _dropDownValue = newValue!;
+                      });
+                    },
+                  ),
+                ],
               ),
               RoundedButton(
                 text: 'Ekle',

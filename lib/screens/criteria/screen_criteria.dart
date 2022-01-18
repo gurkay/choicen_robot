@@ -90,6 +90,10 @@ class _ScreenCriteriaState extends State<ScreenCriteria>
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () => _startAddCriteria(context),
+      ),
     );
   }
 
