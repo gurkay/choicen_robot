@@ -23,7 +23,7 @@ class RequestCriteria implements IRequest {
     Criteria _criteria = Criteria.withCriteriaId(
       result,
       criteria.categoryId,
-      criteria.activityName,
+      criteria.criteriaName,
       criteria.criteriaBigValuePerfect,
     );
     return _criteria;

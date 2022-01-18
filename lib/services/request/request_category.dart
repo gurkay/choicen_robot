@@ -12,6 +12,16 @@ class RequestCategory implements IRequest {
       where: '${dbHelper.colCategoryId} = ?',
       whereArgs: [categoryId],
     );
+    await db.delete(
+      dbHelper.activityTable,
+      where: '${dbHelper.colCategoryId} = ?',
+      whereArgs: [categoryId],
+    );
+    await db.delete(
+      dbHelper.criteriaTable,
+      where: '${dbHelper.colCategoryId} = ?',
+      whereArgs: [categoryId],
+    );
     return result;
   }
 

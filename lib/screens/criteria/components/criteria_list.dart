@@ -28,8 +28,9 @@ class CriteriaList extends StatelessWidget {
                   ),
                   child: ListTile(
                     title: Text('${criterias[index].criteriaName}'),
-                    subtitle: Text(
-                        'Yüksek Miktar Olmasi İyidir : ${criterias[index].criteriaBigValuePerfect}'),
+                    subtitle: criterias[index].criteriaBigValuePerfect == 1
+                        ? Text('Yüksek Miktar Olmasi İyidir')
+                        : Text('Düşük Miktar Olmasi İyidir'),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
                       color: Theme.of(context).errorColor,
