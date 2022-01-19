@@ -1,3 +1,4 @@
+import 'package:choicen_robot/components/rounded_input_field.dart';
 import 'package:choicen_robot/models/activity.dart';
 import 'package:choicen_robot/models/calculate.dart';
 import 'package:choicen_robot/models/category.dart';
@@ -30,13 +31,69 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   }
   List<Activity> _listActivities = [];
   List<Criteria> _listCriterias = [];
+  List<Widget> _listCardWidget = [];
+
+  final List<TextEditingController> _listTextEditingController = [];
+  List<double> _listEnteredAmount = [];
+
+  void _submitData() {
+    for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
+        print(_listTextEditingController[_listCount].text);
+        if (_listTextEditingController[_listCount].text.isEmpty) {
+          return;
+        }
+      }
+    }
+
+    for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
+        _listEnteredAmount
+            .add(double.parse(_listTextEditingController[_listCount].text));
+        print(_listEnteredAmount[_listCount]);
+        if (_listEnteredAmount[_listCount].isInfinite) {
+          return;
+        }
+      }
+    }
+
+    int row = _listActivities.length;
+    int col = _listCriterias.length;
+
+    var arr = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+
+    for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
+        arr[i][j] = _listEnteredAmount[_listCount];
+      }
+    }
+
+    var betterValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        if (betterValue[0][j] == 0.0) {
+          betterValue[0][j] = arr[i][j];
+        }
+        if (arr[i][j] < betterValue[0][j]) {
+          betterValue[0][j] = arr[i][j];
+        }
+      }
+    }
+
+    for (int j = 0; j < _listCriterias.length; j++) {
+      print('betterValue ::: ${betterValue[0][j]}');
+    }
+  }
+
   getLists() async {
     await _responseActivity!.doListActivity(_category.categoryId);
     await _responseCriteria!.doListCriteria(_category.categoryId);
-
-    for (var i = 0; i < _listActivities.length; i++) {
-      print(_listActivities[i].activityName);
-    }
   }
 
   @override
@@ -47,20 +104,48 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text('Hesaplanan Öneri'),
+        actions: [
+          IconButton(
+            onPressed: _submitData,
+            icon: Icon(Icons.calculate),
+          ),
+        ],
       ),
       body: Container(
-        child: Column(
-          children: [
-            Text(_category.categoryName),
-            Text(_listActivities[0].activityName),
-            Text(_listCriterias[0].criteriaName),
-            Text(_listCriterias[1].criteriaName),
-            Text(_listCriterias[3].criteriaName),
-            Text(_listCriterias[4].criteriaName),
-          ],
+        height: size.height * 0.80,
+        child: ListView.builder(
+          itemCount: _listActivities.length,
+          itemBuilder: (ctx, index) {
+            for (var i = 0, _listCount = 0; i < _listActivities.length; i++) {
+              _listCardWidget.add(
+                Card(
+                  elevation: 5,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 5,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(_listActivities[i].activityName),
+                      for (var j = 0;
+                          j < _listCriterias.length;
+                          j++, _listCount++)
+                        RoundedInputField(
+                          hintText: '${_listCriterias[j].criteriaName} ',
+                          controller: _listTextEditingController[_listCount],
+                          onChanged: (_) => _submitData,
+                        ),
+                    ],
+                  ),
+                ),
+              );
+            }
+            return _listCardWidget[index];
+          },
         ),
       ),
     );
@@ -127,6 +212,11 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   void onSuccessDoListCriteria(List<Criteria> criterias) {
     setState(() {
       _listCriterias = criterias;
+      for (var i = 0, _listCount = 0; i < _listActivities.length; i++) {
+        for (var j = 0; j < _listCriterias.length; j++, _listCount++) {
+          _listTextEditingController.add(TextEditingController());
+        }
+      }
     });
   }
 }
