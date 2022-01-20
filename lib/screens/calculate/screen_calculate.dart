@@ -75,7 +75,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
       row,
       (index) => List.filled(col, 0.0, growable: false),
     );
-    for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
+    for (int i = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++) {
         if (betterValue[0][j] == 0.0) {
           betterValue[0][j] = arr[i][j];
@@ -86,9 +86,63 @@ class _ScreenCalculateState extends State<ScreenCalculate>
       }
     }
 
-    for (int j = 0; j < _listCriterias.length; j++) {
-      print('betterValue ::: ${betterValue[0][j]}');
+    var bestValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        if (arr[i][j] > bestValue[0][j]) {
+          bestValue[0][j] = arr[i][j];
+        }
+      }
     }
+
+    var calculateEntropiValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        calculateEntropiValue[0][j] += arr[i][j];
+      }
+    }
+
+    var calculateNormalizeEntropiValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        calculateEntropiValue[i][j] = arr[i][j] / calculateEntropiValue[0][j] ;
+      }
+    }
+
+    var calculateLogEntropiValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        calculateLogEntropiValue[i][j] = calculateNormalizeEntropiValue[i][j] * log(calculateNormalizeEntropiValue[i][j]) ;
+      }
+    }
+
+    var totalLogEntropiValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        totalLogEntropiValue[i][j] += calculateLogEntropiValue[i][j];
+      }
+    }
+
+    var double activitiesLogValue(int _listCriterias.length){
+
+    } 
+
+
   }
 
   getLists() async {
