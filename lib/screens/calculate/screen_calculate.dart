@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:choicen_robot/components/rounded_input_field.dart';
 import 'package:choicen_robot/models/activity.dart';
 import 'package:choicen_robot/models/calculate.dart';
@@ -68,6 +70,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
         arr[i][j] = _listEnteredAmount[_listCount];
+        print('arr:::${arr[i][j]}');
       }
     }
 
@@ -85,7 +88,9 @@ class _ScreenCalculateState extends State<ScreenCalculate>
         }
       }
     }
-
+    for (int j = 0; j < _listCriterias.length; j++) {
+      print('betterValue:::${betterValue[0][j]}');
+    }
     var bestValue = List.generate(
       row,
       (index) => List.filled(col, 0.0, growable: false),
@@ -97,6 +102,9 @@ class _ScreenCalculateState extends State<ScreenCalculate>
         }
       }
     }
+    for (int j = 0; j < _listCriterias.length; j++) {
+      print('bestValue:::${bestValue[0][j]}');
+    }
 
     var calculateEntropiValue = List.generate(
       row,
@@ -104,8 +112,12 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     );
     for (int i = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++) {
-        calculateEntropiValue[0][j] += arr[i][j];
+        calculateEntropiValue[0][j] = double.parse(
+            (calculateEntropiValue[0][j] + arr[i][j]).toStringAsFixed(3));
       }
+    }
+    for (int j = 0; j < _listCriterias.length; j++) {
+      print('calculateEntropiValue:::${calculateEntropiValue[0][j]}');
     }
 
     var calculateNormalizeEntropiValue = List.generate(
@@ -114,7 +126,15 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     );
     for (int i = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++) {
-        calculateEntropiValue[i][j] = arr[i][j] / calculateEntropiValue[0][j] ;
+        calculateNormalizeEntropiValue[i][j] = double.parse(
+            (arr[i][j] / calculateEntropiValue[0][j]).toStringAsFixed(3));
+      }
+    }
+
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        print(
+            'calculateNormalizeEntropiValue:::${calculateNormalizeEntropiValue[i][j]}');
       }
     }
 
@@ -124,7 +144,16 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     );
     for (int i = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++) {
-        calculateLogEntropiValue[i][j] = calculateNormalizeEntropiValue[i][j] * log(calculateNormalizeEntropiValue[i][j]) ;
+        calculateLogEntropiValue[i][j] = double.parse(
+            (calculateNormalizeEntropiValue[i][j] *
+                    log(calculateNormalizeEntropiValue[i][j]))
+                .toStringAsFixed(3));
+      }
+    }
+
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        print('calculateLogEntropiValue:::${calculateLogEntropiValue[i][j]}');
       }
     }
 
@@ -138,11 +167,142 @@ class _ScreenCalculateState extends State<ScreenCalculate>
       }
     }
 
-    var double activitiesLogValue(int _listCriterias.length){
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        print('totalLogEntropiValue:::${totalLogEntropiValue[i][j]}');
+      }
+    }
 
-    } 
+    double activitiesLogValue = 1 / log(_listActivities.length);
 
+    var entropiValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int j = 0; j < _listCriterias.length; j++) {
+      entropiValue[0][j] = double.parse(
+          (activitiesLogValue * totalLogEntropiValue[0][j] * (-1))
+              .toStringAsFixed(3));
+    }
 
+    for (int j = 0; j < _listCriterias.length; j++) {
+      print('entropiValue:::${entropiValue[0][j]}');
+    }
+
+    var oneEntropiValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int j = 0; j < _listCriterias.length; j++) {
+      oneEntropiValue[0][j] = 1 - entropiValue[0][j];
+    }
+
+    for (int j = 0; j < _listCriterias.length; j++) {
+      print('oneEntropiValue:::${oneEntropiValue[0][j]}');
+    }
+
+    double totalOneEntropiValue = 0.0;
+    for (int j = 0; j < _listCriterias.length; j++) {
+      totalOneEntropiValue = double.parse(
+          (totalOneEntropiValue + oneEntropiValue[0][j]).toStringAsFixed(3));
+    }
+
+    print('totalOneEntropiValue:::${totalOneEntropiValue}');
+
+    var entropiWeightValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int j = 0; j < _listCriterias.length; j++) {
+      entropiWeightValue[0][j] = double.parse(
+          (oneEntropiValue[0][j] / totalOneEntropiValue).toStringAsFixed(3));
+    }
+
+    for (int j = 0; j < _listCriterias.length; j++) {
+      print('entropiWeightValue:::${entropiWeightValue[0][j]}');
+    }
+
+    var arrayBetterValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        arrayBetterValue[i][j] =
+            double.parse((arr[i][j] - betterValue[0][j]).toStringAsFixed(3));
+      }
+    }
+
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        print('arrayBetterValue:::${arrayBetterValue[i][j]}');
+      }
+    }
+
+    var arrayBestValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int j = 0; j < _listCriterias.length; j++) {
+      arrayBestValue[0][j] = double.parse(
+          (bestValue[0][j] - betterValue[0][j]).toStringAsFixed(3));
+    }
+
+    for (int j = 0; j < _listCriterias.length; j++) {
+      print('arrayBestValue:::${arrayBestValue[0][j]}');
+    }
+
+    var normalizedUtilityValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        normalizedUtilityValue[i][j] = double.parse(
+            (arrayBetterValue[i][j] / arrayBestValue[0][j]).toStringAsFixed(3));
+      }
+    }
+
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        print('normalizedUtilityValue:::${normalizedUtilityValue[i][j]}');
+      }
+    }
+
+    var totalUtilityValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        totalUtilityValue[i][j] = double.parse(
+            (normalizedUtilityValue[i][j] * entropiWeightValue[0][j])
+                .toStringAsFixed(3));
+      }
+    }
+
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        print('totalUtilityValue:::${totalUtilityValue[i][j]}');
+      }
+    }
+
+    var generalTotalUtilityValue = List.generate(
+      row,
+      (index) => List.filled(col, 0.0, growable: false),
+    );
+    for (int i = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++) {
+        generalTotalUtilityValue[i][0] = double.parse(
+            (generalTotalUtilityValue[i][0] + totalUtilityValue[i][j])
+                .toStringAsFixed(3));
+      }
+    }
+
+    for (int i = 0; i < _listActivities.length; i++) {
+      print(
+          '${_listActivities[i].activityName}:::${generalTotalUtilityValue[i][0]}');
+    }
   }
 
   getLists() async {
