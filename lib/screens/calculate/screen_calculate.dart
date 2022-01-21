@@ -163,15 +163,14 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     );
     for (int i = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++) {
-        totalLogEntropiValue[i][j] += calculateLogEntropiValue[i][j];
+        totalLogEntropiValue[0][j] = double.parse((totalLogEntropiValue[0][j] + calculateLogEntropiValue[i][j]).toStringAsFixed(3));
       }
     }
 
-    for (int i = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++) {
-        print('totalLogEntropiValue:::${totalLogEntropiValue[i][j]}');
+        print('totalLogEntropiValue:::${totalLogEntropiValue[0][j]}');
       }
-    }
+
 
     double activitiesLogValue = 1 / log(_listActivities.length);
 
