@@ -70,7 +70,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
         arr[i][j] = _listEnteredAmount[_listCount];
-        print('arr:::${arr[i][j]}');
+        // print('arr:::${arr[i][j]}');
       }
     }
 
@@ -89,7 +89,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
       }
     }
     for (int j = 0; j < _listCriterias.length; j++) {
-      print('betterValue:::${betterValue[0][j]}');
+      //print('betterValue:::${betterValue[0][j]}');
     }
     var bestValue = List.generate(
       row,
@@ -103,7 +103,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
       }
     }
     for (int j = 0; j < _listCriterias.length; j++) {
-      print('bestValue:::${bestValue[0][j]}');
+      //print('bestValue:::${bestValue[0][j]}');
     }
 
     var calculateEntropiValue = List.generate(
@@ -117,7 +117,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
       }
     }
     for (int j = 0; j < _listCriterias.length; j++) {
-      print('calculateEntropiValue:::${calculateEntropiValue[0][j]}');
+      //print('calculateEntropiValue:::${calculateEntropiValue[0][j]}');
     }
 
     var calculateNormalizeEntropiValue = List.generate(
@@ -133,8 +133,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
     for (int i = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++) {
-        print(
-            'calculateNormalizeEntropiValue:::${calculateNormalizeEntropiValue[i][j]}');
+        //print('calculateNormalizeEntropiValue:::${calculateNormalizeEntropiValue[i][j]}');
       }
     }
 
@@ -153,7 +152,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
     for (int i = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++) {
-        print('calculateLogEntropiValue:::${calculateLogEntropiValue[i][j]}');
+        //print('calculateLogEntropiValue:::${calculateLogEntropiValue[i][j]}');
       }
     }
 
