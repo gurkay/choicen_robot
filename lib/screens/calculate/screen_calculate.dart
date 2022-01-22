@@ -89,7 +89,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hesaplanan Öneri'),
+        title: Text('Hesap Verileri'),
         actions: [
           IconButton(
             onPressed: _submitData,
