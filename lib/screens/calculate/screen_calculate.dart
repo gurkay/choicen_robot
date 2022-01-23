@@ -6,6 +6,7 @@ import 'package:choicen_robot/models/activity.dart';
 import 'package:choicen_robot/models/calculate.dart';
 import 'package:choicen_robot/models/category.dart';
 import 'package:choicen_robot/models/criteria.dart';
+import 'package:choicen_robot/screens/calculate/components/damy_data.dart';
 import 'package:choicen_robot/services/response/response_activity.dart';
 import 'package:choicen_robot/services/response/response_calculate.dart';
 import 'package:choicen_robot/services/response/response_criteria.dart';
@@ -54,8 +55,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
       for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
         _listEnteredAmount
             .add(double.parse(_listTextEditingController[_listCount].text));
-
-        if (_listEnteredAmount[_listCount].isInfinite) {
+        if (_listEnteredAmount[_listCount].isNaN) {
           return;
         }
       }
@@ -70,7 +70,8 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
     List<double> generalTotalUtilityValue =
         getCalculate.generalTotalUtilityValue();
-
+    double avarageTotalUtility =
+        getCalculate.avaregeGeneralTotalUtilityValue(generalTotalUtilityValue);
     List<Map<String, dynamic>> items = [];
 
     for (var i = 0; i < generalTotalUtilityValue.length; i++) {
@@ -82,7 +83,11 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
     items.sort((a, b) => b['value'].compareTo(a['value']));
 
-    print('${items}');
+    for (var i = 0; i < items.length; i++) {
+      if (items[i]['value'] > avarageTotalUtility) {
+        print('${items[i]['activityName']} ::: ${items[i]['value']}');
+      }
+    }
   }
 
   getLists() async {

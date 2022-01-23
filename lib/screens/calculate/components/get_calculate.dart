@@ -33,7 +33,7 @@ class GetCalculate {
 
     for (int i = 0, _listCount = 0; i < this.row; i++) {
       for (int j = 0; j < this.col; j++, _listCount++) {
-        arr[i][j] = this.listEnteredAmount[_listCount];
+        arr[i][j] = listEnteredAmount[_listCount];
       }
     }
 
@@ -82,8 +82,7 @@ class GetCalculate {
     );
     for (int i = 0; i < this.row; i++) {
       for (int j = 0; j < this.col; j++) {
-        calculateEntropiValue[j] = double.parse(
-            (calculateEntropiValue[j] + arr[i][j]).toStringAsFixed(4));
+        calculateEntropiValue[j] = (calculateEntropiValue[j] + arr[i][j]);
       }
     }
 
@@ -93,8 +92,8 @@ class GetCalculate {
     );
     for (int i = 0; i < this.row; i++) {
       for (int j = 0; j < this.col; j++) {
-        calculateNormalizeEntropiValue[i][j] = double.parse(
-            (arr[i][j] / calculateEntropiValue[j]).toStringAsFixed(4));
+        calculateNormalizeEntropiValue[i][j] =
+            (arr[i][j] / calculateEntropiValue[j]);
       }
     }
 
@@ -104,10 +103,8 @@ class GetCalculate {
     );
     for (int i = 0; i < this.row; i++) {
       for (int j = 0; j < this.col; j++) {
-        calculateLogEntropiValue[i][j] = double.parse(
-            (calculateNormalizeEntropiValue[i][j] *
-                    log(calculateNormalizeEntropiValue[i][j]))
-                .toStringAsFixed(4));
+        calculateLogEntropiValue[i][j] = (calculateNormalizeEntropiValue[i][j] *
+            log(calculateNormalizeEntropiValue[i][j]));
       }
     }
 
@@ -118,13 +115,12 @@ class GetCalculate {
     );
     for (int i = 0; i < this.row; i++) {
       for (int j = 0; j < this.col; j++) {
-        totalLogEntropiValue[j] = double.parse(
-            (totalLogEntropiValue[j] + calculateLogEntropiValue[i][j])
-                .toStringAsFixed(4));
+        totalLogEntropiValue[j] =
+            (totalLogEntropiValue[j] + calculateLogEntropiValue[i][j]);
       }
     }
 
-    double activitiesLogValue = 1 / log(this.row);
+    double activitiesLogValue = (1 / log(row));
 
     List<double> entropiValue = List<double>.filled(
       this.col,
@@ -220,16 +216,6 @@ class GetCalculate {
                 .toStringAsFixed(3));
       }
     }
-
-    // List<double> avarageGeneralTotalUtilityValue = [];
-    // double avarageTotalUtility =
-    //     avaregeGeneralTotalUtilityValue(generalTotalUtilityValue);
-    // for (var i = 0; i < row; i++) {
-    //   if (generalTotalUtilityValue[i] > avarageTotalUtility) {
-    //     avarageGeneralTotalUtilityValue.add(generalTotalUtilityValue[i]);
-    //   }
-    //   avarageGeneralTotalUtilityValue.add(generalTotalUtilityValue[i]);
-    // }
 
     return generalTotalUtilityValue;
   }
