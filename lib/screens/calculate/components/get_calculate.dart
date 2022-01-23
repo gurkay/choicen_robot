@@ -15,6 +15,16 @@ class GetCalculate {
     required this.listCriterias,
   });
 
+  double avaregeGeneralTotalUtilityValue(List<double> value) {
+    double calculate = 0.0;
+
+    for (var i = 0; i < row; i++) {
+      calculate = calculate + value[i];
+    }
+
+    return calculate / row;
+  }
+
   List<double> generalTotalUtilityValue() {
     var arr = List.generate(
       row,
@@ -202,12 +212,24 @@ class GetCalculate {
       0.0,
       growable: false,
     );
+
     for (int i = 0; i < this.row; i++) {
       for (int j = 0; j < this.col; j++) {
-        generalTotalUtilityValue[i] =
-            (generalTotalUtilityValue[i] + totalUtilityValue[i][j]);
+        generalTotalUtilityValue[i] = double.parse(
+            (generalTotalUtilityValue[i] + totalUtilityValue[i][j])
+                .toStringAsFixed(3));
       }
     }
+
+    // List<double> avarageGeneralTotalUtilityValue = [];
+    // double avarageTotalUtility =
+    //     avaregeGeneralTotalUtilityValue(generalTotalUtilityValue);
+    // for (var i = 0; i < row; i++) {
+    //   if (generalTotalUtilityValue[i] > avarageTotalUtility) {
+    //     avarageGeneralTotalUtilityValue.add(generalTotalUtilityValue[i]);
+    //   }
+    //   avarageGeneralTotalUtilityValue.add(generalTotalUtilityValue[i]);
+    // }
 
     return generalTotalUtilityValue;
   }

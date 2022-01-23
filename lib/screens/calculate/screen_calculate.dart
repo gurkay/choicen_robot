@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:choicen_robot/components/rounded_input_field.dart';
@@ -60,17 +61,28 @@ class _ScreenCalculateState extends State<ScreenCalculate>
       }
     }
 
-    List<double> generalTotalUtilityValue = GetCalculate(
+    GetCalculate getCalculate = GetCalculate(
       row: _listActivities.length,
       col: _listCriterias.length,
       listEnteredAmount: _listEnteredAmount,
       listCriterias: _listCriterias,
-    ).generalTotalUtilityValue();
+    );
 
-    for (int i = 0; i < _listActivities.length; i++) {
-      print(
-          '${_listActivities[i].activityName}:::${generalTotalUtilityValue[i].toStringAsFixed(3)}');
+    List<double> generalTotalUtilityValue =
+        getCalculate.generalTotalUtilityValue();
+
+    List<Map<String, dynamic>> items = [];
+
+    for (var i = 0; i < generalTotalUtilityValue.length; i++) {
+      items.add({
+        'activityName': _listActivities[i].activityName,
+        'value': generalTotalUtilityValue[i],
+      });
     }
+
+    items.sort((a, b) => b['value'].compareTo(a['value']));
+
+    print('${items}');
   }
 
   getLists() async {
