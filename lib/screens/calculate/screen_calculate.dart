@@ -12,7 +12,10 @@ import 'package:choicen_robot/services/response/response_calculate.dart';
 import 'package:choicen_robot/services/response/response_criteria.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'components/calculate_list.dart';
 import 'components/get_calculate.dart';
+import 'components/new_calculate.dart';
 
 class ScreenCalculate extends StatefulWidget {
   static String routeName = '/screen_calculate';
@@ -39,84 +42,46 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   List<Activity> _listActivities = [];
   List<Criteria> _listCriterias = [];
   List<Widget> _listCardWidget = [];
-  Calculate _calculate = new Calculate(0,0,0,0,0);
+  List<Map<String, dynamic>> _itemsCalculate = [];
+  Calculate _calculate = new Calculate(0, 0, 0, 0, 0);
 
   final List<TextEditingController> _listTextEditingController = [];
   List<double> _listEnteredAmount = [];
 
-  void _addNewCalculate(double txAmount) async {
+  void _addNewCalculate(List<double> txAmount) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await _responseCalculate!.doInsert(
-      Calculate(
-        sharedPreferences.getInt('userId'),
-        _category.categoryId,
-        _listActivities.activityId,
-        _listCriteria.criteriaId,
-        txAmount,
-        
-      )
-    );
-    
-    getLists();
-    
-    final newTx = Calculate.withActivityId(
-      _calculate.calculateId,
-              sharedPreferences.getInt('userId'),
-        _category.categoryId,
-        _listActivities.activityId,
-        _listCriteria.criteriaId,
-        txAmount,
-    );
-    
-    setState((){
-      _categoryCalculate.add(newTx);
-    });
-  }
-  
-  void _startAddCalculate(BuildContext context){
-    showModalBottomSheet(
-      context: context,
-      builder: (_) {
-        return GestureDetector(
-          onTap: () {},
-          child: NewCalculate(_addNewCalculate),
-          behavior: HitTestBehavior.opaque,
-        );
-      }
-    );
-  }
-  
-  void _deleteCalculate(int id) async {
-    await _responseCalculate!.doDelete(id);
-    
-    setState((){
-      _categoryCalculate.removeWhere((calculate) => calculate.calculateId == id);
-    });
-  }
-  
-  void _submitData() {
-    for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
-      for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
-        if (_listTextEditingController[_listCount].text.isEmpty) {
-          return;
-        }
-      }
-    }
 
-    for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
-      for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
-        _listEnteredAmount
-            .add(double.parse(_listTextEditingController[_listCount].text));
-        if (_listEnteredAmount[_listCount].isNaN) {
-          return;
-        }
-      }
-    }
+    // for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
+    //   for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
+    //     await _responseCalculate!.doInsert(Calculate(
+    //       sharedPreferences.getInt('userId'),
+    //       _category.categoryId,
+    //       _listActivities[i].activityId,
+    //       _listCriterias[j].criteriaId,
+    //       txAmount[_listCount],
+    //     ));
+
+    //     getLists();
+
+    //     final newTx = Calculate.withCalculateId(
+    //       _calculate.calculateId,
+    //       sharedPreferences.getInt('userId'),
+    //       _category.categoryId,
+    //       _listActivities[i].activityId,
+    //       _listCriterias[j].criteriaId,
+    //       txAmount[_listCount],
+    //     );
+
+    //     setState(() {
+    //       _categoryCalculate.add(newTx);
+    //     });
+    //   }
+    // }
 
     GetCalculate getCalculate = GetCalculate(
       row: _listActivities.length,
       col: _listCriterias.length,
-      listEnteredAmount: _listEnteredAmount,
+      listEnteredAmount: txAmount,
       listCriterias: _listCriterias,
     );
 
@@ -124,27 +89,53 @@ class _ScreenCalculateState extends State<ScreenCalculate>
         getCalculate.generalTotalUtilityValue();
     double avarageTotalUtility =
         getCalculate.avaregeGeneralTotalUtilityValue(generalTotalUtilityValue);
-    List<Map<String, dynamic>> items = [];
 
     for (var i = 0; i < generalTotalUtilityValue.length; i++) {
-      items.add({
+      _itemsCalculate.add({
         'activityName': _listActivities[i].activityName,
         'value': generalTotalUtilityValue[i],
       });
     }
 
-    items.sort((a, b) => b['value'].compareTo(a['value']));
+    _itemsCalculate.sort((a, b) => b['value'].compareTo(a['value']));
 
-    for (var i = 0; i < items.length; i++) {
-      if (items[i]['value'] > avarageTotalUtility) {
-        print('${items[i]['activityName']} ::: ${items[i]['value']}');
+    for (var i = 0; i < _itemsCalculate.length; i++) {
+      if (_itemsCalculate[i]['value'] > avarageTotalUtility) {
+        print(
+            '${_itemsCalculate[i]['activityName']} ::: ${_itemsCalculate[i]['value']}');
       }
     }
+  }
+
+  void _startAddCalculate(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return GestureDetector(
+            onTap: () {},
+            child: NewCalculate(
+              _addNewCalculate,
+              _listActivities,
+              _listCriterias,
+            ),
+            behavior: HitTestBehavior.opaque,
+          );
+        });
+  }
+
+  void _deleteCalculate(int id) async {
+    await _responseCalculate!.doDelete(id);
+
+    setState(() {
+      _categoryCalculate
+          .removeWhere((calculate) => calculate.calculateId == id);
+    });
   }
 
   getLists() async {
     await _responseActivity!.doListActivity(_category.categoryId);
     await _responseCriteria!.doListCriteria(_category.categoryId);
+    await _responseCalculate!.doListCalculate(_category.categoryId);
   }
 
   @override
@@ -159,78 +150,21 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     return Scaffold(
       appBar: AppBar(
         title: Text('Hesap Verileri'),
-        actions: [
-          IconButton(
-            onPressed: _submitData,
-            icon: Icon(Icons.calculate),
-          ),
-        ],
       ),
-      body: Container(
-        height: size.height * 0.80,
-        child: ListView.builder(
-          itemCount: _listActivities.length,
-          itemBuilder: (ctx, index) {
-            for (var i = 0, _listCount = 0; i < _listActivities.length; i++) {
-              _listCardWidget.add(
-                Card(
-                  elevation: 5,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 5,
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: size.width * 1.0,
-                        height: size.height * 0.06,
-                        decoration: BoxDecoration(
-                          color: Colors.purple[400],
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              _listActivities[i].activityName,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 0.5,
-                        color: Colors.grey,
-                        indent: 10,
-                        endIndent: 10,
-                        height: 10,
-                      ),
-                      for (var j = 0;
-                          j < _listCriterias.length;
-                          j++, _listCount++)
-                        RoundedInputField(
-                          hintText: '${_listCriterias[j].criteriaName} ',
-                          controller: _listTextEditingController[_listCount],
-                          onChanged: (_) => _submitData,
-                        ),
-                      const Divider(
-                        thickness: 0.5,
-                        color: Colors.grey,
-                        indent: 10,
-                        endIndent: 10,
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }
-            return _listCardWidget[index];
-          },
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CalculateList(
+              _itemsCalculate,
+              _deleteCalculate,
+            ),
+          ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () => _startAddCalculate(context),
       ),
     );
   }
@@ -252,7 +186,9 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
   @override
   void onSuccessDoListCalculate(List<Calculate> calculates) {
-    // TODO: implement onSuccessDoListCalculate
+    setState(() {
+      _categoryCalculate = calculates;
+    });
   }
 
   @override

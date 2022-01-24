@@ -45,7 +45,7 @@ class ResponseCalculate implements IResponse {
     throw UnimplementedError();
   }
 
-  doListActivity(dynamic categoryId) {
+  doListCalculate(dynamic categoryId) {
     requestCalculate
         .getListCalculates(categoryId)
         .then((value) => _callBackCalculate.onSuccessDoListCalculate(value))
