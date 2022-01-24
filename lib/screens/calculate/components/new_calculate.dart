@@ -50,70 +50,75 @@ class _NewCalculateState extends State<NewCalculate> {
     return SingleChildScrollView(
       child: Container(
         height: size.height * 0.80,
-        child: ListView.builder(
-          itemCount: widget._listActivities.length,
-          itemBuilder: (ctx, index) {
-            for (var i = 0, _listCount = 0;
-                i < widget._listActivities.length;
-                i++) {
-              _listCardWidget.add(
-                Card(
-                  elevation: 5,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 5,
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: size.width * 1.0,
-                        height: size.height * 0.06,
-                        decoration: BoxDecoration(
-                          color: Colors.purple[400],
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              widget._listActivities[i].activityName,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
+        child: Container(
+          child: ListView.builder(
+            itemCount: widget._listActivities.length,
+            itemBuilder: (ctx, index) {
+              for (var i = 0, _listCount = 0;
+                  i < widget._listActivities.length;
+                  i++) {
+                _listCardWidget.add(
+                  Card(
+                    elevation: 5,
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 5,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: size.width * 1.0,
+                          height: size.height * 0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.purple[400],
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget._listActivities[i].activityName,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                ),
                               ),
-                            ),
-                          ],
+                              if (i == widget._listActivities.length - 1)
+                                Text('data'),
+                            ],
+                          ),
                         ),
-                      ),
-                      const Divider(
-                        thickness: 0.5,
-                        color: Colors.grey,
-                        indent: 10,
-                        endIndent: 10,
-                        height: 10,
-                      ),
-                      for (var j = 0;
-                          j < widget._listCriterias.length;
-                          j++, _listCount++)
-                        RoundedInputField(
-                          hintText: '${widget._listCriterias[j].criteriaName} ',
-                          //controller: _listTextEditingController[index],
-                          onChanged: (_) => _submitData,
+                        const Divider(
+                          thickness: 0.5,
+                          color: Colors.grey,
+                          indent: 10,
+                          endIndent: 10,
+                          height: 10,
                         ),
-                      const Divider(
-                        thickness: 0.5,
-                        color: Colors.grey,
-                        indent: 10,
-                        endIndent: 10,
-                        height: 10,
-                      ),
-                    ],
+                        for (var j = 0;
+                            j < widget._listCriterias.length;
+                            j++, _listCount++)
+                          RoundedInputField(
+                            hintText:
+                                '${widget._listCriterias[j].criteriaName} ',
+                            //controller: _listTextEditingController[index],
+                            onChanged: (_) => _submitData,
+                          ),
+                        const Divider(
+                          thickness: 0.5,
+                          color: Colors.grey,
+                          indent: 10,
+                          endIndent: 10,
+                          height: 10,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }
-            return _listCardWidget[index];
-          },
+                );
+              }
+              return _listCardWidget[index];
+            },
+          ),
         ),
       ),
     );
