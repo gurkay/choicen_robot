@@ -42,10 +42,6 @@ class _NewActivityState extends State<NewActivity> {
                 controller: _controllerActivityName,
                 onChanged: (_) => _submitData,
               ),
-              RoundedButton(
-                text: 'Ekle',
-                press: _submitData,
-              ),
             ],
           ),
         ),
