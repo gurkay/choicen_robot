@@ -35,13 +35,65 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     _responseActivity = ResponseActivity(this);
     _responseCriteria = ResponseCriteria(this);
   }
+  List<Calculate> _categoryCalculate = [];
   List<Activity> _listActivities = [];
   List<Criteria> _listCriterias = [];
   List<Widget> _listCardWidget = [];
+  Calculate _calculate = new Calculate(0,0,0,0,0);
 
   final List<TextEditingController> _listTextEditingController = [];
   List<double> _listEnteredAmount = [];
 
+  void _addNewCalculate(double txAmount) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await _responseCalculate!.doInsert(
+      Calculate(
+        sharedPreferences.getInt('userId'),
+        _category.categoryId,
+        _listActivities.activityId,
+        _listCriteria.criteriaId,
+        txAmount,
+        
+      )
+    );
+    
+    getLists();
+    
+    final newTx = Calculate.withActivityId(
+      _calculate.calculateId,
+              sharedPreferences.getInt('userId'),
+        _category.categoryId,
+        _listActivities.activityId,
+        _listCriteria.criteriaId,
+        txAmount,
+    );
+    
+    setState((){
+      _categoryCalculate.add(newTx);
+    });
+  }
+  
+  void _startAddCalculate(BuildContext context){
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewCalculate(_addNewCalculate),
+          behavior: HitTestBehavior.opaque,
+        );
+      }
+    );
+  }
+  
+  void _deleteCalculate(int id) async {
+    await _responseCalculate!.doDelete(id);
+    
+    setState((){
+      _categoryCalculate.removeWhere((calculate) => calculate.calculateId == id);
+    });
+  }
+  
   void _submitData() {
     for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
