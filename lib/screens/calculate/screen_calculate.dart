@@ -6,7 +6,9 @@ import 'package:choicen_robot/models/activity.dart';
 import 'package:choicen_robot/models/calculate.dart';
 import 'package:choicen_robot/models/category.dart';
 import 'package:choicen_robot/models/criteria.dart';
+import 'package:choicen_robot/screens/arguments/screen_arguments.dart';
 import 'package:choicen_robot/screens/calculate/components/damy_data.dart';
+import 'package:choicen_robot/screens/calculate/components/new_calc.dart';
 import 'package:choicen_robot/services/response/response_activity.dart';
 import 'package:choicen_robot/services/response/response_calculate.dart';
 import 'package:choicen_robot/services/response/response_criteria.dart';
@@ -108,19 +110,28 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   }
 
   void _startAddCalculate(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return GestureDetector(
-            onTap: () {},
-            child: NewCalculate(
-              _addNewCalculate,
-              _listActivities,
-              _listCriterias,
-            ),
-            behavior: HitTestBehavior.opaque,
-          );
-        });
+    Navigator.pushNamed(
+      context,
+      NewCalc.routeName,
+      arguments: ScreenArguments(
+        addTx: _addNewCalculate,
+        listActivities: _listActivities,
+        listCriterias: _listCriterias,
+      ),
+    );
+    // showModalBottomSheet(
+    //     context: context,
+    //     builder: (_) {
+    //       return GestureDetector(
+    //         onTap: () {},
+    //         child: NewCalculate(
+    //           _addNewCalculate,
+    //           _listActivities,
+    //           _listCriterias,
+    //         ),
+    //         behavior: HitTestBehavior.opaque,
+    //       );
+    //     });
   }
 
   void _deleteCalculate(int id) async {

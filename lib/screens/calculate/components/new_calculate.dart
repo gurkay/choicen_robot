@@ -18,8 +18,9 @@ class NewCalculate extends StatefulWidget {
 
 class _NewCalculateState extends State<NewCalculate> {
   final List<TextEditingController> _listTextEditingController = [];
-  List<double> _listEnteredAmount = [];
-  List<Widget> _listCardWidget = [];
+
+  final List<Widget> _listCardWidget = [];
+  final List<double> _listEnteredAmount = [];
 
   void _submitData() {
     for (int i = 0, _listCount = 0; i < widget._listActivities.length; i++) {
@@ -34,9 +35,6 @@ class _NewCalculateState extends State<NewCalculate> {
       for (int j = 0; j < widget._listCriterias.length; j++, _listCount++) {
         _listEnteredAmount
             .add(double.parse(_listTextEditingController[_listCount].text));
-        if (_listEnteredAmount[_listCount].isNaN) {
-          return;
-        }
       }
     }
 
@@ -54,7 +52,7 @@ class _NewCalculateState extends State<NewCalculate> {
           child: ListView.builder(
             itemCount: widget._listActivities.length,
             itemBuilder: (ctx, index) {
-              for (var i = 0, _listCount = 0;
+              for (int i = 0, _listCount = 0;
                   i < widget._listActivities.length;
                   i++) {
                 _listCardWidget.add(
@@ -83,8 +81,6 @@ class _NewCalculateState extends State<NewCalculate> {
                                   fontSize: 24,
                                 ),
                               ),
-                              if (i == widget._listActivities.length - 1)
-                                Text('data'),
                             ],
                           ),
                         ),
@@ -95,14 +91,15 @@ class _NewCalculateState extends State<NewCalculate> {
                           endIndent: 10,
                           height: 10,
                         ),
-                        for (var j = 0;
+                        for (int j = 0;
                             j < widget._listCriterias.length;
                             j++, _listCount++)
                           RoundedInputField(
                             hintText:
-                                '${widget._listCriterias[j].criteriaName} ',
-                            //controller: _listTextEditingController[index],
+                                '${widget._listCriterias[j].criteriaName} index ::: $_listCount',
+                            //controller: _controllerActivityName,
                             onChanged: (_) => _submitData,
+                            keyboardType: TextInputType.number,
                           ),
                         const Divider(
                           thickness: 0.5,
@@ -111,11 +108,13 @@ class _NewCalculateState extends State<NewCalculate> {
                           endIndent: 10,
                           height: 10,
                         ),
+                        Text('index ::: $_listCount'),
                       ],
                     ),
                   ),
                 );
               }
+
               return _listCardWidget[index];
             },
           ),

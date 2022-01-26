@@ -1,3 +1,4 @@
+import 'package:choicen_robot/screens/calculate/components/new_calc.dart';
 import 'package:choicen_robot/screens/calculate/screen_calculate.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,12 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => ScreenCalculate(
             category: args,
+          ),
+        );
+      case '/new_calc':
+        return MaterialPageRoute(
+          builder: (_) => NewCalc(
+            screenArguments: args,
           ),
         );
       default:
