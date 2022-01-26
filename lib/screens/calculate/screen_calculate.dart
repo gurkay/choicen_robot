@@ -110,28 +110,28 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   }
 
   void _startAddCalculate(BuildContext context) {
-    Navigator.pushNamed(
-      context,
-      NewCalc.routeName,
-      arguments: ScreenArguments(
-        addTx: _addNewCalculate,
-        listActivities: _listActivities,
-        listCriterias: _listCriterias,
-      ),
-    );
-    // showModalBottomSheet(
-    //     context: context,
-    //     builder: (_) {
-    //       return GestureDetector(
-    //         onTap: () {},
-    //         child: NewCalculate(
-    //           _addNewCalculate,
-    //           _listActivities,
-    //           _listCriterias,
-    //         ),
-    //         behavior: HitTestBehavior.opaque,
-    //       );
-    //     });
+    // Navigator.pushNamed(
+    //   context,
+    //   NewCalc.routeName,
+    //   arguments: ScreenArguments(
+    //     addTx: _addNewCalculate,
+    //     listActivities: _listActivities,
+    //     listCriterias: _listCriterias,
+    //   ),
+    // );
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return GestureDetector(
+            onTap: () {},
+            child: NewCalculate(
+              _addNewCalculate,
+              _listActivities,
+              _listCriterias,
+            ),
+            behavior: HitTestBehavior.opaque,
+          );
+        });
   }
 
   void _deleteCalculate(int id) async {

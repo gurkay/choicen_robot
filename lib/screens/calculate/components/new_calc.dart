@@ -29,15 +29,6 @@ class _NewCalcState extends State<NewCalc> {
       for (int j = 0;
           j < widget.screenArguments.listCriterias.length;
           j++, _listCount++) {
-        _listTextEditingController[_listCount] = TextEditingController();
-      }
-    }
-    for (int i = 0, _listCount = 0;
-        i < widget.screenArguments.listActivities.length;
-        i++) {
-      for (int j = 0;
-          j < widget.screenArguments.listCriterias.length;
-          j++, _listCount++) {
         if (_listTextEditingController[_listCount].text.isEmpty) {
           return;
         }
@@ -66,8 +57,7 @@ class _NewCalcState extends State<NewCalc> {
       for (int j = 0;
           j < widget.screenArguments.listCriterias.length;
           j++, _listCount++) {
-        // _listTextEditingController[_listCount] = TextEditingController();
-        print(_listCount);
+        _listTextEditingController.add(TextEditingController());
       }
     }
   }
