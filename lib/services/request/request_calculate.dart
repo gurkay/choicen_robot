@@ -23,7 +23,7 @@ class RequestCalculate implements IRequest {
     Calculate _calculate = Calculate.withCalculateId(
       result,
       calculate.userId,
-      calculate.categoryId,
+      calculate.conclutionId,
       calculate.activityId,
       calculate.criteriaId,
       calculate.amount,
@@ -43,13 +43,13 @@ class RequestCalculate implements IRequest {
     throw UnimplementedError();
   }
 
-  Future<List<Calculate>> getListCalculates(int categoryId) async {
+  Future<List<Calculate>> getListCalculates(String conclutionId) async {
     List<Calculate> calculates = <Calculate>[];
     var db = await dbHelper.db;
     List<Map<String, Object?>> result = await db!.query(
       dbHelper.calculateTable,
-      where: '${dbHelper.colCategoryId} = ?',
-      whereArgs: [categoryId],
+      where: '${dbHelper.colConclutionId} = ?',
+      whereArgs: [conclutionId],
     );
     var count = result.length;
     for (var i = 0; i < count; i++) {

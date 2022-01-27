@@ -1,14 +1,14 @@
 class Calculate {
   int? _calculateId;
   int? _userId;
-  int? _categoryId;
+  int? _conclutionId;
   int? _activityId;
   int? _criteriaId;
   double? _amount;
 
   Calculate(
     this._userId,
-    this._categoryId,
+    this._conclutionId,
     this._activityId,
     this._criteriaId,
     this._amount,
@@ -17,7 +17,7 @@ class Calculate {
   Calculate.withCalculateId(
     this._calculateId,
     this._userId,
-    this._categoryId,
+    this._conclutionId,
     this._activityId,
     this._criteriaId,
     this._amount,
@@ -32,10 +32,10 @@ class Calculate {
     }
   }
 
-  int get categoryId => _categoryId ?? 0;
-  set categoryId(int newCategoryId) {
-    if (newCategoryId != 0) {
-      this._categoryId = newCategoryId;
+  int get conclutionId => _conclutionId ?? 0;
+  set conclutionId(int newConclutionId) {
+    if (newConclutionId != 0) {
+      this._conclutionId = newConclutionId;
     }
   }
 
@@ -64,7 +64,7 @@ class Calculate {
       map['calculateId'] = _calculateId;
     }
     map['userId'] = _userId;
-    map['categoryId'] = _categoryId;
+    map['conclutionId'] = _conclutionId;
     map['activityId'] = _activityId;
     map['criteriaId'] = _criteriaId;
     map['amount'] = _amount;
@@ -74,7 +74,7 @@ class Calculate {
   Calculate.fromMapObject(Map<String, dynamic> map) {
     _calculateId = map['calculateId'];
     _userId = map['userId'];
-    _categoryId = map['categoryId'];
+    _conclutionId = map['conclutionId'];
     _activityId = map['activityId'];
     _criteriaId = map['criteriaId'];
     _amount = map['amount'];

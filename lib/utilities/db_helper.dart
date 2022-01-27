@@ -29,14 +29,27 @@ class DbHelper {
   String colCriteriaName = 'criteriaName';
   String colCriteriaBigValuePerfect = 'criteriaBigValuePerfect';
 
+  // CONCLUTION TABLE
+  String conclutionTable = 'conclutionTable';
+  String colConclutionId = 'conclutionId';
+  String colCatTabCategoryId = 'categoryId';
+  String colConclutionName = 'conclutionName';
+  String colConclutionDate = 'conclutionDate';
+
   // CALCULATE TABLE
   String calculateTable = 'calculateTable';
   String colCalculateId = 'calculateId';
   String colUserTabUserId = 'userId';
-  String colCatTabCategoryId = 'categoryId';
+  String colConclutionTableConclutionId = 'conclutionId';
   String colActivityTableActivityId = 'activityId';
   String colCriteriaTableCriteriaId = 'criteriaId';
   String colCalculateAmount = 'calculateAmount';
+
+  // CONCLUTION FINISH TABLE
+  String conclutionFinishTable = 'conclutionFinishTable';
+  String colConclutionFinishId = 'conclutionFinishId';
+  String colConclutionTabConclutionId = 'conclutionId';
+  String colConclutionFinishValue = 'conclutionFinishValue';
 
   static final DbHelper _instance = new DbHelper.internal();
   factory DbHelper() => _instance;
@@ -88,19 +101,34 @@ class DbHelper {
         '$colCriteriaName TEXT,'
         '$colCriteriaBigValuePerfect INTEGER)';
 
+    // CONCLUTION TABLE CREATE
+    var sqlConclutionTable = 'CREATE TABLE $conclutionTable('
+        '$colConclutionId TEXT PRIMARY KEY,'
+        '$colCatTabCategoryId INTEGER,'
+        '$colConclutionName TEXT,'
+        '$colConclutionDate TEXT)';
+
     // CALCULATE TABLE CREATE
     var sqlCalculateTable = 'CREATE TABLE $calculateTable('
         '$colCalculateId INTEGER PRIMARY KEY AUTOINCREMENT,'
         '$colUserTabUserId INTEGER,'
-        '$colCatTabCategoryId INTEGER,'
+        '$colConclutionTableConclutionId TEXT,'
         '$colActivityTableActivityId INTEGER,'
         '$colCriteriaTableCriteriaId INTEGER,'
         '$colCalculateAmount REAL)';
+
+    // CONCLUTION FINISH TABLE
+    var sqlConclutionFinishTable = 'CREATE TABLE $conclutionFinishTable('
+        '$colConclutionFinishId TEXT PRIMARY KEY,'
+        '$colConclutionTabConclutionId TEXT,'
+        '$colConclutionFinishValue REAL)';
 
     db.execute(sqlUserTable);
     db.execute(sqlCategoryTable);
     db.execute(sqlActivityTable);
     db.execute(sqlCriteriaTable);
+    db.execute(sqlConclutionTable);
     db.execute(sqlCalculateTable);
+    db.execute(sqlConclutionFinishTable);
   }
 }
