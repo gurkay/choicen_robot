@@ -1,7 +1,7 @@
 class Calculate {
   int? _calculateId;
   int? _userId;
-  int? _conclutionId;
+  String? _conclutionId;
   int? _activityId;
   int? _criteriaId;
   double? _amount;
@@ -32,8 +32,8 @@ class Calculate {
     }
   }
 
-  int get conclutionId => _conclutionId ?? 0;
-  set conclutionId(int newConclutionId) {
+  String get conclutionId => _conclutionId ?? '';
+  set conclutionId(String newConclutionId) {
     if (newConclutionId != 0) {
       this._conclutionId = newConclutionId;
     }
