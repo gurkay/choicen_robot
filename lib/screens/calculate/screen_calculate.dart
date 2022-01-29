@@ -45,7 +45,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   List<Criteria> _listCriterias = [];
   List<Widget> _listCardWidget = [];
   List<Map<String, dynamic>> _itemsCalculate = [];
-  Calculate _calculate = new Calculate(0, 0, 0, 0, 0);
+  Calculate _calculate = new Calculate(0, '0', 0, 0, 0);
 
   final List<TextEditingController> _listTextEditingController = [];
   List<double> _listEnteredAmount = [];
