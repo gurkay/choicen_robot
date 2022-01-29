@@ -1,4 +1,4 @@
-import 'package:choicen_robot/models/Conclution.dart';
+import 'package:choicen_robot/models/conclution.dart';
 import 'package:choicen_robot/utilities/db_helper.dart';
 import 'package:choicen_robot/utilities/i_request.dart';
 

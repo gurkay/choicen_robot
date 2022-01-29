@@ -2,15 +2,20 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:choicen_robot/components/rounded_input_field.dart';
+
 import 'package:choicen_robot/models/activity.dart';
 import 'package:choicen_robot/models/calculate.dart';
 import 'package:choicen_robot/models/category.dart';
+import '../../models/conclution.dart';
+import 'package:choicen_robot/models/conclution_finish.dart';
 import 'package:choicen_robot/models/criteria.dart';
 import 'package:choicen_robot/screens/arguments/screen_arguments.dart';
 import 'package:choicen_robot/screens/calculate/components/damy_data.dart';
 import 'package:choicen_robot/screens/calculate/components/new_calc.dart';
 import 'package:choicen_robot/services/response/response_activity.dart';
 import 'package:choicen_robot/services/response/response_calculate.dart';
+import 'package:choicen_robot/services/response/response_conclution.dart';
+import 'package:choicen_robot/services/response/response_conclution_finish.dart';
 import 'package:choicen_robot/services/response/response_criteria.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -30,17 +35,28 @@ class ScreenCalculate extends StatefulWidget {
 }
 
 class _ScreenCalculateState extends State<ScreenCalculate>
-    implements CallBackCalculate, CallBackActivity, CallBackCriteria {
+    implements
+        CallBackCalculate,
+        CallBackActivity,
+        CallBackCriteria,
+        CallBackConclution,
+        CallBackConclutionFinish {
   Category _category;
   ResponseCalculate? _responseCalculate;
   ResponseActivity? _responseActivity;
   ResponseCriteria? _responseCriteria;
+  ResponseConclution? _responseConclution;
+  ResponseConclutionFinish? _responseConclutionFinish;
+
   _ScreenCalculateState(this._category) {
     _responseCalculate = ResponseCalculate(this);
     _responseActivity = ResponseActivity(this);
     _responseCriteria = ResponseCriteria(this);
+    _responseConclution = ResponseConclution(this);
+    _responseConclutionFinish = ResponseConclutionFinish(this);
   }
   List<Calculate> _categoryCalculate = [];
+  List<Conclution> _listConclutions = [];
   List<Activity> _listActivities = [];
   List<Criteria> _listCriterias = [];
   List<Widget> _listCardWidget = [];
@@ -196,10 +212,8 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   }
 
   @override
-  void onSuccessDoListCalculate(List<Calculate> calculates) {
-    setState(() {
-      _categoryCalculate = calculates;
-    });
+  void onSuccessDoListCalculate(List<Calculate> conclutions) {
+    print('screen_calculate:::onSuccessDoListCalculate:::$conclutions');
   }
 
   @override
@@ -249,5 +263,46 @@ class _ScreenCalculateState extends State<ScreenCalculate>
         }
       }
     });
+  }
+
+  @override
+  void onErrorConclution(String error) {
+    // TODO: implement onErrorConclution
+  }
+
+  @override
+  void onErrorConclutionFinish(String error) {
+    // TODO: implement onErrorConclutionFinish
+  }
+
+  @override
+  void onSuccessDoDeleteConclution(int result) {
+    // TODO: implement onSuccessDoDeleteConclution
+  }
+
+  @override
+  void onSuccessDoDeleteConclutionFinish(int result) {
+    // TODO: implement onSuccessDoDeleteConclutionFinish
+  }
+
+  @override
+  void onSuccessDoInsertConclution(Conclution conclution) {
+    print('screen_calculate:::onSuccessDoInsertConclution:::$conclution');
+  }
+
+  @override
+  void onSuccessDoInsertConclutionFinish(ConclutionFinish conclutionFinish) {
+    // TODO: implement onSuccessDoInsertConclutionFinish
+  }
+
+  @override
+  void onSuccessDoListConclution(List<Conclution> conclutions) {
+    print('screen_calculate:::onSuccessDoListConclution:::$conclutions');
+  }
+
+  @override
+  void onSuccessDoListConclutionFinish(
+      List<ConclutionFinish> conclutionFinies) {
+    // TODO: implement onSuccessDoListConclutionFinish
   }
 }

@@ -1,4 +1,4 @@
-import 'package:choicen_robot/models/Conclution.dart';
+import 'package:choicen_robot/models/conclution.dart';
 import '../request/request_conclution.dart';
 
 import 'package:choicen_robot/utilities/i_response.dart';
@@ -45,9 +45,9 @@ class ResponseConclution implements IResponse {
     throw UnimplementedError();
   }
 
-  doListConclution(dynamic categoryId) {
+  doListConclution(dynamic conclutionId) {
     requestConclution
-        .getListConclutions(categoryId)
+        .getListConclutions(conclutionId)
         .then((value) => _callBackConclution.onSuccessDoListConclution(value))
         .catchError((onError) =>
             _callBackConclution.onErrorConclution(onError.toString()));
