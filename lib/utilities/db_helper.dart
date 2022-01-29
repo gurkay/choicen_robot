@@ -49,6 +49,7 @@ class DbHelper {
   String conclutionFinishTable = 'conclutionFinishTable';
   String colConclutionFinishId = 'conclutionFinishId';
   String colConclutionTabConclutionId = 'conclutionId';
+  String colActivityTableActivityName = 'activityName';
   String colConclutionFinishValue = 'conclutionFinishValue';
 
   static final DbHelper _instance = new DbHelper.internal();
@@ -121,6 +122,7 @@ class DbHelper {
     var sqlConclutionFinishTable = 'CREATE TABLE $conclutionFinishTable('
         '$colConclutionFinishId TEXT PRIMARY KEY,'
         '$colConclutionTabConclutionId TEXT,'
+        '$colActivityTableActivityName TEXT,'
         '$colConclutionFinishValue REAL)';
 
     db.execute(sqlUserTable);

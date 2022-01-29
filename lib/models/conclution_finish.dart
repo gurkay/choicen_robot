@@ -1,16 +1,21 @@
+import 'package:choicen_robot/models/activity.dart';
+
 class ConclutionFinish {
   String? _conclutinonFinishId;
   String? _conclutionId;
+  String? _activityName;
   double? _conclutionFinishValue;
 
   ConclutionFinish(
     this._conclutionId,
+    this._activityName,
     this._conclutionFinishValue,
   );
 
   ConclutionFinish.withConclutionId(
     this._conclutinonFinishId,
     this._conclutionId,
+    this._activityName,
     this._conclutionFinishValue,
   );
 
@@ -20,6 +25,13 @@ class ConclutionFinish {
   set conclutionId(String newConclutionId) {
     if (newConclutionId != '') {
       this._conclutionId = newConclutionId;
+    }
+  }
+
+  String get activityName => _activityName ?? '';
+  set activityName(String newActivityName) {
+    if (activityName != '') {
+      this._activityName = activityName;
     }
   }
 
@@ -36,6 +48,7 @@ class ConclutionFinish {
       map['conclutinonFinishId'] = _conclutinonFinishId;
     }
     map['conclutionId'] = _conclutionId;
+    map['activityName'] = _activityName;
     map['conclutionFinishValue'] = _conclutionFinishValue;
 
     return map;
@@ -44,6 +57,7 @@ class ConclutionFinish {
   ConclutionFinish.fromMapObject(Map<String, dynamic> map) {
     _conclutinonFinishId = map['conclutinonFinishId'];
     _conclutionId = map['conclutionId'];
+    _activityName = map['activityName'];
     _conclutionFinishValue = map['conclutionFinishValue'];
   }
 }

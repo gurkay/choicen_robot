@@ -37,17 +37,17 @@ class RequestConclution implements IRequest {
   }
 
   Future<List<Conclution>> getListConclutions(String conclutionId) async {
-    List<Conclution> Conclutions = <Conclution>[];
+    List<Conclution> conclutions = <Conclution>[];
     var db = await dbHelper.db;
     List<Map<String, Object?>> result = await db!.query(
-      dbHelper.ConclutionTable,
+      dbHelper.conclutionTable,
       where: '${dbHelper.colConclutionId} = ?',
       whereArgs: [conclutionId],
     );
     var count = result.length;
     for (var i = 0; i < count; i++) {
-      Conclutions.add(Conclution.fromMapObject(result[i]));
+      conclutions.add(Conclution.fromMapObject(result[i]));
     }
-    return Conclutions;
+    return conclutions;
   }
 }
