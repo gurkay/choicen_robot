@@ -1,27 +1,34 @@
 import 'package:choicen_robot/models/activity.dart';
 import 'package:choicen_robot/models/calculate.dart';
+import 'package:choicen_robot/models/conclution.dart';
+import 'package:choicen_robot/models/conclution_finish.dart';
 import 'package:flutter/material.dart';
 
 class CalculateList extends StatelessWidget {
-  final List<Map<String, dynamic>> itemsCalculate;
+  final List<Conclution> conclutions;
+  final List<ConclutionFinish> conclutionFinies;
   final Function deleteCalculate;
 
   CalculateList(
-    this.itemsCalculate,
+    this.conclutions,
+    this.conclutionFinies,
     this.deleteCalculate,
-  );
+  ) {
+    print('calculate_list:::conclutions:::${conclutions.length}');
+    print('calculate_list:::conclutionFinies:::${conclutionFinies.length}');
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
       height: size.height * 0.85,
-      child: itemsCalculate.isEmpty
+      child: conclutions.isEmpty
           ? const Center(
               child: Text('Hesaplanacak Verileri Giriniz'),
             )
           : ListView.builder(
-              itemCount: itemsCalculate.length,
+              itemCount: conclutions.length,
               itemBuilder: (ctx, index) {
                 return Card(
                   elevation: 5,
@@ -30,12 +37,13 @@ class CalculateList extends StatelessWidget {
                     horizontal: 5,
                   ),
                   child: ListTile(
-                    title: Text('${itemsCalculate[index]['activityName']}'),
+                    title: Text(
+                        'conclutions[index].conclutionName:::${conclutions[index].conclutionName}'),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
                       color: Theme.of(context).errorColor,
                       onPressed: () =>
-                          deleteCalculate(itemsCalculate[index]['value']),
+                          deleteCalculate(conclutions[index].conclutionId),
                     ),
                   ),
                 );

@@ -45,9 +45,9 @@ class ResponseConclution implements IResponse {
     throw UnimplementedError();
   }
 
-  doListConclution(dynamic conclutionId) {
+  doListConclution(dynamic categoryId) {
     requestConclution
-        .getListConclutions(conclutionId)
+        .getListConclutions(categoryId)
         .then((value) => _callBackConclution.onSuccessDoListConclution(value))
         .catchError((onError) =>
             _callBackConclution.onErrorConclution(onError.toString()));

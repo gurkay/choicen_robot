@@ -2,7 +2,7 @@ class Conclution {
   String? _conclutinonId;
   int? _categoryId;
   String? _conclutionName;
-  DateTime? _conclutionDate;
+  String? _conclutionDate;
 
   Conclution(
     this._categoryId,
@@ -33,8 +33,8 @@ class Conclution {
     }
   }
 
-  DateTime get conclutionDate => _conclutionDate ?? DateTime(1982);
-  set conclutionDate(DateTime newConclutionDate) {
+  String get conclutionDate => _conclutionDate ?? '';
+  set conclutionDate(String newConclutionDate) {
     if (newConclutionDate != '') {
       this._conclutionDate = newConclutionDate;
     }

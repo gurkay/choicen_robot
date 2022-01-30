@@ -57,10 +57,11 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   }
   List<Calculate> _categoryCalculate = [];
   List<Conclution> _listConclutions = [];
+  List<ConclutionFinish> _listConclutionFinies = [];
   List<Activity> _listActivities = [];
   List<Criteria> _listCriterias = [];
   List<Widget> _listCardWidget = [];
-  List<Map<String, dynamic>> _itemsCalculate = [];
+  List<Map<String, dynamic>> _itemsConclutionFinish = [];
   Calculate _calculate = new Calculate(0, '0', 0, 0, 0);
 
   final List<TextEditingController> _listTextEditingController = [];
@@ -68,33 +69,38 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
   void _addNewCalculate(List<double> txAmount) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Conclution _conclutionTest = Conclution.withConclutionId(
+      DateTime.now().toString(),
+      _category.categoryId,
+      _category.categoryName,
+      DateTime.now().toString(),
+    );
 
-    // for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
-    //   for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
-    //     await _responseCalculate!.doInsert(Calculate(
-    //       sharedPreferences.getInt('userId'),
-    //       _category.categoryId,
-    //       _listActivities[i].activityId,
-    //       _listCriterias[j].criteriaId,
-    //       txAmount[_listCount],
-    //     ));
+    print(
+        'screen_calculate:::_conclutionTest.conclutionId:::${_conclutionTest.conclutionId}');
+    print(
+        'screen_calculate:::_conclutionTest.categoryId:::${_conclutionTest.categoryId}');
+    print(
+        'screen_calculate:::_conclutionTest.conclutionName:::${_conclutionTest.conclutionName}');
+    print(
+        'screen_calculate:::_conclutionTest.conclutionDate:::${_conclutionTest.conclutionDate}');
+    getLists();
 
-    //     getLists();
+    await _responseConclution!.doInsert(_conclutionTest);
 
-    //     final newTx = Calculate.withCalculateId(
-    //       _calculate.calculateId,
-    //       sharedPreferences.getInt('userId'),
-    //       _category.categoryId,
-    //       _listActivities[i].activityId,
-    //       _listCriterias[j].criteriaId,
-    //       txAmount[_listCount],
-    //     );
+    print('screen_calculate:::_listConclution:::${_listConclutions}');
 
-    //     setState(() {
-    //       _categoryCalculate.add(newTx);
-    //     });
-    //   }
-    // }
+    for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
+        await _responseCalculate!.doInsert(Calculate(
+          sharedPreferences.getInt('userId'),
+          _listConclutions.last.conclutionId,
+          _listActivities[i].activityId,
+          _listCriterias[j].criteriaId,
+          txAmount[_listCount],
+        ));
+      }
+    }
 
     GetCalculate getCalculate = GetCalculate(
       row: _listActivities.length,
@@ -109,32 +115,57 @@ class _ScreenCalculateState extends State<ScreenCalculate>
         getCalculate.avaregeGeneralTotalUtilityValue(generalTotalUtilityValue);
 
     for (var i = 0; i < generalTotalUtilityValue.length; i++) {
-      _itemsCalculate.add({
+      _itemsConclutionFinish.add({
         'activityName': _listActivities[i].activityName,
         'value': generalTotalUtilityValue[i],
       });
     }
 
-    _itemsCalculate.sort((a, b) => b['value'].compareTo(a['value']));
+    _itemsConclutionFinish.sort((a, b) => b['value'].compareTo(a['value']));
 
-    for (var i = 0; i < _itemsCalculate.length; i++) {
-      if (_itemsCalculate[i]['value'] > avarageTotalUtility) {
+    for (var i = 0; i < generalTotalUtilityValue.length; i++) {
+      if (_itemsConclutionFinish[i]['value'] > avarageTotalUtility) {
         print(
-            '${_itemsCalculate[i]['activityName']} ::: ${_itemsCalculate[i]['value']}');
+            '${_itemsConclutionFinish[i]['activityName']} ::: ${_itemsConclutionFinish[i]['value']}');
+        await _responseConclutionFinish!.doInsert(
+          ConclutionFinish.withConclutionId(
+            DateTime.now().toString(),
+            _listConclutions.last.conclutionId,
+            _itemsConclutionFinish[i]['activityName'],
+            _itemsConclutionFinish[i]['value'],
+          ),
+        );
       }
     }
+
+    getLists();
+
+    final newTxConclution = Conclution.withConclutionId(
+      _listConclutions.last.conclutionId,
+      _category.categoryId,
+      _listConclutions.last.conclutionName,
+      _listConclutions.last.conclutionDate,
+    );
+
+    List<ConclutionFinish> newTxConclutionFinish = [];
+    for (var i = 0; i < _listConclutionFinies.length; i++) {
+      newTxConclutionFinish.add(
+        ConclutionFinish.withConclutionId(
+          _listConclutionFinies.last.conclutionFinishId,
+          _listConclutionFinies.last.conclutionId,
+          _listConclutionFinies.last.activityName,
+          _listConclutionFinies.last.conclutionFinishValue,
+        ),
+      );
+    }
+
+    setState(() {
+      _listConclutions.add(newTxConclution);
+      _listConclutionFinies = newTxConclutionFinish;
+    });
   }
 
   void _startAddCalculate(BuildContext context) {
-    // Navigator.pushNamed(
-    //   context,
-    //   NewCalc.routeName,
-    //   arguments: ScreenArguments(
-    //     addTx: _addNewCalculate,
-    //     listActivities: _listActivities,
-    //     listCriterias: _listCriterias,
-    //   ),
-    // );
     showModalBottomSheet(
         context: context,
         builder: (_) {
@@ -162,7 +193,11 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   getLists() async {
     await _responseActivity!.doListActivity(_category.categoryId);
     await _responseCriteria!.doListCriteria(_category.categoryId);
-    await _responseCalculate!.doListCalculate(_category.categoryId);
+    await _responseConclution!.doListConclution(_category.categoryId);
+    for (var i = 0; i < _listConclutions.length; i++) {
+      await _responseConclutionFinish!
+          .doListConclutionFinish(_listConclutions[i].conclutionId);
+    }
   }
 
   @override
@@ -183,7 +218,8 @@ class _ScreenCalculateState extends State<ScreenCalculate>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CalculateList(
-              _itemsCalculate,
+              _listConclutions,
+              _listConclutionFinies,
               _deleteCalculate,
             ),
           ],
@@ -218,12 +254,12 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
   @override
   void onErrorActivity(String error) {
-    // TODO: implement onErrorActivity
+    print('screen_calculate:::onErrorActivity:::$error');
   }
 
   @override
   void onErrorCriteria(String error) {
-    // TODO: implement onErrorCriteria
+    print('screen_calculate:::onErrorCriteria:::$error');
   }
 
   @override
@@ -267,12 +303,12 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
   @override
   void onErrorConclution(String error) {
-    // TODO: implement onErrorConclution
+    print('screen_calculate:::onErrorConclution:::$error');
   }
 
   @override
   void onErrorConclutionFinish(String error) {
-    // TODO: implement onErrorConclutionFinish
+    print('screen_calculate:::onErrorConclutionFinish:::$error');
   }
 
   @override
@@ -287,22 +323,33 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
   @override
   void onSuccessDoInsertConclution(Conclution conclution) {
-    print('screen_calculate:::onSuccessDoInsertConclution:::$conclution');
+    print(
+        'screen_calculate:::onSuccessDoInsertConclution:::${conclution.conclutionName}');
+    setState(() {
+      _listConclutions.add(conclution);
+    });
   }
 
   @override
   void onSuccessDoInsertConclutionFinish(ConclutionFinish conclutionFinish) {
-    // TODO: implement onSuccessDoInsertConclutionFinish
+    setState(() {
+      _listConclutionFinies.add(conclutionFinish);
+    });
   }
 
   @override
   void onSuccessDoListConclution(List<Conclution> conclutions) {
     print('screen_calculate:::onSuccessDoListConclution:::$conclutions');
+    setState(() {
+      _listConclutions = conclutions;
+    });
   }
 
   @override
   void onSuccessDoListConclutionFinish(
       List<ConclutionFinish> conclutionFinies) {
-    // TODO: implement onSuccessDoListConclutionFinish
+    // setState(() {
+    //   _listConclutionFinies = conclutionFinies;
+    // });
   }
 }

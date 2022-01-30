@@ -20,8 +20,13 @@ class RequestConclution implements IRequest {
   Future<Conclution> insert(dynamic conclution) async {
     var db = await dbHelper.db;
     var result = await db!.insert(dbHelper.conclutionTable, conclution.toMap());
-
-    return conclution;
+    Conclution _conclution = Conclution.withConclutionId(
+      conclution.conclutionId,
+      conclution.categoryId,
+      conclution.conclutionName,
+      conclution.conclutionDate,
+    );
+    return _conclution;
   }
 
   @override
@@ -36,18 +41,18 @@ class RequestConclution implements IRequest {
     throw UnimplementedError();
   }
 
-  Future<List<Conclution>> getListConclutions(String conclutionId) async {
-    List<Conclution> conclutions = <Conclution>[];
+  Future<List<Conclution>> getListConclutions(int categoryId) async {
+    List<Conclution> _conclutions = <Conclution>[];
     var db = await dbHelper.db;
     List<Map<String, Object?>> result = await db!.query(
       dbHelper.conclutionTable,
-      where: '${dbHelper.colConclutionId} = ?',
-      whereArgs: [conclutionId],
+      where: '${dbHelper.colCategoryId} = ?',
+      whereArgs: [categoryId],
     );
-    var count = result.length;
-    for (var i = 0; i < count; i++) {
-      conclutions.add(Conclution.fromMapObject(result[i]));
+
+    for (var i = 0; i < result.length; i++) {
+      _conclutions.add(Conclution.fromMapObject(result[i]));
     }
-    return conclutions;
+    return _conclutions;
   }
 }

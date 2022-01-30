@@ -37,7 +37,7 @@ class _NewCalculateState extends State<NewCalculate> {
             .add(double.parse(_listTextEditingController[_listCount].text));
       }
     }
-
+    print('new_calculate:::_submitData');
     widget.addTx(_listEnteredAmount);
     Navigator.of(context).pop();
   }
