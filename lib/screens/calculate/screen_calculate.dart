@@ -189,12 +189,16 @@ class _ScreenCalculateState extends State<ScreenCalculate>
         });
   }
 
-  void _deleteCalculate(int id) async {
-    await _responseCalculate!.doDelete(id);
+  void _deleteCalculate(int conclutionId) async {
+    await _responseConclution!.doDelete(conclutionId);
+    await _responseCalculate!.doDelete(conclutionId);
+    await _responseConclutionFinish!.doDelete(conclutionId);
 
     setState(() {
-      _categoryCalculate
-          .removeWhere((calculate) => calculate.calculateId == id);
+      _listConclutions
+          .removeWhere((conclution) => conclution.conclutionId == conclutionId);
+      _listConclutionFinies.removeWhere(
+          (conclutionFinish) => conclutionFinish.conclutionId == conclutionId);
     });
   }
 

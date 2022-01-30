@@ -41,8 +41,6 @@ class CalculateList extends StatelessWidget {
                       ListTile(
                         title: Text(
                             'conclutions[index].conclutionName:::${conclutions[index].conclutionName}'),
-                        subtitle: Text(
-                            '${conclutionFinies[index].conclutionFinishValue}'),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
                           color: Theme.of(context).errorColor,
@@ -50,6 +48,8 @@ class CalculateList extends StatelessWidget {
                               deleteCalculate(conclutions[index].conclutionId),
                         ),
                       ),
+                      for (var i = 0; i < conclutionFinies.length; i++)
+                        Text('${conclutionFinies[i].conclutionFinishValue}'),
                     ],
                   ),
                 );
