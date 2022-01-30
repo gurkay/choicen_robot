@@ -69,36 +69,31 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
   void _addNewCalculate(List<double> txAmount) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Conclution _conclutionTest = Conclution.withConclutionId(
-      DateTime.now().toString(),
-      _category.categoryId,
-      _category.categoryName,
-      DateTime.now().toString(),
+
+    await _responseConclution!.doInsert(
+      Conclution.withConclutionId(
+        DateTime.now().toString(),
+        _category.categoryId,
+        _category.categoryName,
+        DateTime.now().toString(),
+      ),
     );
-
-    print(
-        'screen_calculate:::_conclutionTest.conclutionId:::${_conclutionTest.conclutionId}');
-    print(
-        'screen_calculate:::_conclutionTest.categoryId:::${_conclutionTest.categoryId}');
-    print(
-        'screen_calculate:::_conclutionTest.conclutionName:::${_conclutionTest.conclutionName}');
-    print(
-        'screen_calculate:::_conclutionTest.conclutionDate:::${_conclutionTest.conclutionDate}');
-    getLists();
-
-    await _responseConclution!.doInsert(_conclutionTest);
-
-    print('screen_calculate:::_listConclution:::${_listConclutions}');
+    await getLists();
+    print('screen_calculate:::txAmount.length:::${txAmount.length}');
+    print('screen_calculate:::txAmount[0]:::${txAmount[0]}');
+    print('screen_calculate:::_listConclutions:::${_listConclutions}');
 
     for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
-        await _responseCalculate!.doInsert(Calculate(
-          sharedPreferences.getInt('userId'),
-          _listConclutions.last.conclutionId,
-          _listActivities[i].activityId,
-          _listCriterias[j].criteriaId,
-          txAmount[_listCount],
-        ));
+        await _responseCalculate!.doInsert(
+          Calculate(
+            sharedPreferences.getInt('userId'),
+            _listConclutions.last.conclutionId,
+            _listActivities[i].activityId,
+            _listCriterias[j].criteriaId,
+            txAmount[_listCount],
+          ),
+        );
       }
     }
 
@@ -115,20 +110,31 @@ class _ScreenCalculateState extends State<ScreenCalculate>
         getCalculate.avaregeGeneralTotalUtilityValue(generalTotalUtilityValue);
 
     for (var i = 0; i < generalTotalUtilityValue.length; i++) {
-      _itemsConclutionFinish.add({
-        'activityName': _listActivities[i].activityName,
-        'value': generalTotalUtilityValue[i],
+      setState(() {
+        print(
+            'screen_calculate:::generalTotalUtilityValue[$i]:::${generalTotalUtilityValue[i]}');
+        _itemsConclutionFinish.add(
+          {
+            'activityName': _listActivities[i].activityName,
+            'value': generalTotalUtilityValue[i],
+          },
+        );
+        print(
+            'screen_calculate:::_itemsConclutionFinish[$i][value]:::${_itemsConclutionFinish[i]['value']}');
       });
     }
 
     _itemsConclutionFinish.sort((a, b) => b['value'].compareTo(a['value']));
 
     for (var i = 0; i < generalTotalUtilityValue.length; i++) {
+      print(
+          'screen_calculate:::_itemsConclutionFinish[$i][value]:::${_itemsConclutionFinish[i]['value']}');
+      print('screen_calculate:::avarageTotalUtility:::${avarageTotalUtility}');
       if (_itemsConclutionFinish[i]['value'] > avarageTotalUtility) {
         print(
             '${_itemsConclutionFinish[i]['activityName']} ::: ${_itemsConclutionFinish[i]['value']}');
         await _responseConclutionFinish!.doInsert(
-          ConclutionFinish.withConclutionId(
+          ConclutionFinish.withConclutionFinishId(
             DateTime.now().toString(),
             _listConclutions.last.conclutionId,
             _itemsConclutionFinish[i]['activityName'],
@@ -149,14 +155,16 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
     List<ConclutionFinish> newTxConclutionFinish = [];
     for (var i = 0; i < _listConclutionFinies.length; i++) {
-      newTxConclutionFinish.add(
-        ConclutionFinish.withConclutionId(
-          _listConclutionFinies.last.conclutionFinishId,
-          _listConclutionFinies.last.conclutionId,
-          _listConclutionFinies.last.activityName,
-          _listConclutionFinies.last.conclutionFinishValue,
-        ),
-      );
+      setState(() {
+        newTxConclutionFinish.add(
+          ConclutionFinish.withConclutionFinishId(
+            _listConclutionFinies.last.conclutionFinishId,
+            _listConclutionFinies.last.conclutionId,
+            _listConclutionFinies.last.activityName,
+            _listConclutionFinies.last.conclutionFinishValue,
+          ),
+        );
+      });
     }
 
     setState(() {
@@ -325,16 +333,18 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   void onSuccessDoInsertConclution(Conclution conclution) {
     print(
         'screen_calculate:::onSuccessDoInsertConclution:::${conclution.conclutionName}');
-    setState(() {
-      _listConclutions.add(conclution);
-    });
+    // setState(() {
+    //   _listConclutions.add(conclution);
+    // });
   }
 
   @override
   void onSuccessDoInsertConclutionFinish(ConclutionFinish conclutionFinish) {
-    setState(() {
-      _listConclutionFinies.add(conclutionFinish);
-    });
+    print(
+        'screen_calculate:::onSuccessDoInsertConclutionFinish:::${conclutionFinish.activityName}');
+    // setState(() {
+    //   _listConclutionFinies.add(conclutionFinish);
+    // });
   }
 
   @override
@@ -348,8 +358,8 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   @override
   void onSuccessDoListConclutionFinish(
       List<ConclutionFinish> conclutionFinies) {
-    // setState(() {
-    //   _listConclutionFinies = conclutionFinies;
-    // });
+    setState(() {
+      _listConclutionFinies = conclutionFinies;
+    });
   }
 }

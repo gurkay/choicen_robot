@@ -36,15 +36,21 @@ class CalculateList extends StatelessWidget {
                     vertical: 8,
                     horizontal: 5,
                   ),
-                  child: ListTile(
-                    title: Text(
-                        'conclutions[index].conclutionName:::${conclutions[index].conclutionName}'),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      color: Theme.of(context).errorColor,
-                      onPressed: () =>
-                          deleteCalculate(conclutions[index].conclutionId),
-                    ),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(
+                            'conclutions[index].conclutionName:::${conclutions[index].conclutionName}'),
+                        subtitle: Text(
+                            '${conclutionFinies[index].conclutionFinishValue}'),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete),
+                          color: Theme.of(context).errorColor,
+                          onPressed: () =>
+                              deleteCalculate(conclutions[index].conclutionId),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },

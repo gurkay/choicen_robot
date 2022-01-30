@@ -21,8 +21,15 @@ class RequestConclutionFinish implements IRequest {
     var db = await dbHelper.db;
     var result = await db!
         .insert(dbHelper.conclutionFinishTable, conclutionFinish.toMap());
+    ConclutionFinish _conclutionFinish =
+        ConclutionFinish.withConclutionFinishId(
+      conclutionFinish.conclutionFinishId,
+      conclutionFinish.conclutionId,
+      conclutionFinish.activityName,
+      conclutionFinish.conclutionFinishValue,
+    );
 
-    return conclutionFinish;
+    return _conclutionFinish;
   }
 
   @override
@@ -37,19 +44,19 @@ class RequestConclutionFinish implements IRequest {
     throw UnimplementedError();
   }
 
-  Future<List<ConclutionFinish>> getListConclutionFinishs(
-      String conclutionFinishId) async {
-    List<ConclutionFinish> conclutionFinies = <ConclutionFinish>[];
+  Future<List<ConclutionFinish>> getListConclutionFinies(
+      String conclutionId) async {
+    List<ConclutionFinish> _conclutionFinies = <ConclutionFinish>[];
     var db = await dbHelper.db;
     List<Map<String, Object?>> result = await db!.query(
       dbHelper.conclutionFinishTable,
-      where: '${dbHelper.colConclutionFinishId} = ?',
-      whereArgs: [conclutionFinishId],
+      where: '${dbHelper.colConclutionId} = ?',
+      whereArgs: [conclutionId],
     );
-    var count = result.length;
-    for (var i = 0; i < count; i++) {
-      conclutionFinies.add(ConclutionFinish.fromMapObject(result[i]));
+
+    for (var i = 0; i < result.length; i++) {
+      _conclutionFinies.add(ConclutionFinish.fromMapObject(result[i]));
     }
-    return conclutionFinies;
+    return _conclutionFinies;
   }
 }
