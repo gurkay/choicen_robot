@@ -6,12 +6,12 @@ class RequestConclutionFinish implements IRequest {
   DbHelper dbHelper = new DbHelper();
 
   @override
-  Future<int> delete(dynamic conclutionFinishId) async {
+  Future<int> delete(dynamic conclutionId) async {
     var db = await dbHelper.db;
     var result = await db!.delete(
       dbHelper.conclutionFinishTable,
-      where: '${dbHelper.colConclutionFinishId} = ?',
-      whereArgs: [conclutionFinishId],
+      where: '${dbHelper.colConclutionId} = ?',
+      whereArgs: [conclutionId],
     );
     return result;
   }
@@ -21,15 +21,10 @@ class RequestConclutionFinish implements IRequest {
     var db = await dbHelper.db;
     var result = await db!
         .insert(dbHelper.conclutionFinishTable, conclutionFinish.toMap());
-    ConclutionFinish _conclutionFinish =
-        ConclutionFinish.withConclutionFinishId(
-      conclutionFinish.conclutionFinishId,
-      conclutionFinish.conclutionId,
-      conclutionFinish.activityName,
-      conclutionFinish.conclutionFinishValue,
-    );
+    print(
+        'request_conclution_finish:::insert:::${conclutionFinish.conclutionFinishId}');
 
-    return _conclutionFinish;
+    return conclutionFinish;
   }
 
   @override
@@ -53,6 +48,18 @@ class RequestConclutionFinish implements IRequest {
       where: '${dbHelper.colConclutionId} = ?',
       whereArgs: [conclutionId],
     );
+
+    for (var i = 0; i < result.length; i++) {
+      _conclutionFinies.add(ConclutionFinish.fromMapObject(result[i]));
+    }
+    return _conclutionFinies;
+  }
+
+  Future<List<ConclutionFinish>> getListConclutionFiniesWitoutId() async {
+    List<ConclutionFinish> _conclutionFinies = <ConclutionFinish>[];
+    var db = await dbHelper.db;
+    List<Map<String, Object?>> result =
+        await db!.query(dbHelper.conclutionFinishTable);
 
     for (var i = 0; i < result.length; i++) {
       _conclutionFinies.add(ConclutionFinish.fromMapObject(result[i]));

@@ -207,12 +207,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     await _responseActivity!.doListActivity(_category.categoryId);
     await _responseCriteria!.doListCriteria(_category.categoryId);
     await _responseConclution!.doListConclution(_category.categoryId);
-    print(
-        'screen_calculate:::getLists():::_listConclutions.length:::${_listConclutions.length}');
-    for (var i = 0; i < _listConclutions.length; i++) {
-      await _responseConclutionFinish!
-          .doListConclutionFinish(_listConclutions[i].conclutionId);
-    }
+    await _responseConclutionFinish!.doListConclutionFinishWitoutId();
   }
 
   @override
@@ -360,14 +355,10 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   Future<void> onSuccessDoListConclution(List<Conclution> conclutions) async {
     print('screen_calculate:::onSuccessDoListConclution:::$conclutions');
 
-    setState(() async {
+    setState(() {
       _listConclutions = conclutions;
       print(
-          'screen_calculate:::getLists():::_listConclutions.length:::${_listConclutions.length}');
-      for (var i = 0; i < _listConclutions.length; i++) {
-        await _responseConclutionFinish!
-            .doListConclutionFinish(_listConclutions[i].conclutionId);
-      }
+          'screen_calculate:::onSuccessDoListConclution:::_listConclutions.length:::${_listConclutions.length}');
     });
   }
 
@@ -376,6 +367,16 @@ class _ScreenCalculateState extends State<ScreenCalculate>
       List<ConclutionFinish> conclutionFinies) {
     setState(() {
       _listConcFinies.add(conclutionFinies);
+    });
+  }
+
+  @override
+  void onSuccessDoListConclutionFinishWitoutId(
+      List<ConclutionFinish> conclutionFinies) {
+    print(
+        'screen_calculate:::onSuccessDoListConclutionFinishWitoutId:::$conclutionFinies');
+    setState(() {
+      _listConclutionFinies = conclutionFinies;
     });
   }
 }

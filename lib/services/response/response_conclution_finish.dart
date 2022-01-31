@@ -6,6 +6,8 @@ import 'package:choicen_robot/utilities/i_response.dart';
 abstract class CallBackConclutionFinish {
   void onSuccessDoInsertConclutionFinish(ConclutionFinish conclutionFinish);
   void onSuccessDoListConclutionFinish(List<ConclutionFinish> conclutionFinies);
+  void onSuccessDoListConclutionFinishWitoutId(
+      List<ConclutionFinish> conclutionFinies);
   void onSuccessDoDeleteConclutionFinish(int result);
   void onErrorConclutionFinish(String error);
 }
@@ -17,9 +19,9 @@ class ResponseConclutionFinish implements IResponse {
       new RequestConclutionFinish();
 
   @override
-  doDelete(dynamic conclutionFinishId) {
+  doDelete(dynamic conclutionId) {
     requestConclutionFinish
-        .delete(conclutionFinishId)
+        .delete(conclutionId)
         .then((value) =>
             _callBackConclutionFinish.onSuccessDoDeleteConclutionFinish(value))
         .catchError((onError) => _callBackConclutionFinish
@@ -53,6 +55,15 @@ class ResponseConclutionFinish implements IResponse {
         .getListConclutionFinies(conclutionId)
         .then((value) =>
             _callBackConclutionFinish.onSuccessDoListConclutionFinish(value))
+        .catchError((onError) => _callBackConclutionFinish
+            .onErrorConclutionFinish(onError.toString()));
+  }
+
+  doListConclutionFinishWitoutId() {
+    requestConclutionFinish
+        .getListConclutionFiniesWitoutId()
+        .then((value) => _callBackConclutionFinish
+            .onSuccessDoListConclutionFinishWitoutId(value))
         .catchError((onError) => _callBackConclutionFinish
             .onErrorConclutionFinish(onError.toString()));
   }

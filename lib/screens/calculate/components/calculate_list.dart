@@ -53,7 +53,7 @@ class CalculateList extends StatelessWidget {
                                 conclutionFinies[i].conclutionId
                             ? Text(
                                 '${conclutionFinies[i].conclutionFinishValue}')
-                            : Text(''),
+                            : Container(),
                     ],
                   ),
                 );
