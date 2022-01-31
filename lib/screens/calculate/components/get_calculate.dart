@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:choicen_robot/models/criteria.dart';
+import '../../../models/criteria.dart';
 
 class GetCalculate {
   final int row;

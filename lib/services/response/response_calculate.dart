@@ -1,7 +1,6 @@
-import 'package:choicen_robot/models/calculate.dart';
+import '../../models/calculate.dart';
 import '../request/request_calculate.dart';
-
-import 'package:choicen_robot/utilities/i_response.dart';
+import '../../utilities/i_response.dart';
 
 abstract class CallBackCalculate {
   void onSuccessDoInsertCalculate(Calculate calculate);

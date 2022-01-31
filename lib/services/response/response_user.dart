@@ -1,7 +1,5 @@
-import 'package:choicen_robot/services/request/request_user.dart';
-
+import '../../services/request/request_user.dart';
 import '../../utilities/i_response.dart';
-
 import '../../models/user.dart';
 
 abstract class CallBackUser {

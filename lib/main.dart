@@ -1,4 +1,4 @@
-import 'package:choicen_robot/routes/route_generator.dart';
+import '../../routes/route_generator.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/welcome/screen_welcome.dart';

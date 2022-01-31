@@ -1,7 +1,6 @@
-import 'package:choicen_robot/models/conclution.dart';
+import '../../models/conclution.dart';
 import '../request/request_conclution.dart';
-
-import 'package:choicen_robot/utilities/i_response.dart';
+import '../../utilities/i_response.dart';
 
 abstract class CallBackConclution {
   void onSuccessDoInsertConclution(Conclution conclution);

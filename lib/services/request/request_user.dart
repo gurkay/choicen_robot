@@ -1,6 +1,6 @@
-import 'package:choicen_robot/models/user.dart';
-import 'package:choicen_robot/utilities/db_helper.dart';
-import 'package:choicen_robot/utilities/i_request.dart';
+import '../../models/user.dart';
+import '../../utilities/db_helper.dart';
+import '../../utilities/i_request.dart';
 
 class RequestUser implements IRequest {
   DbHelper dbHelper = new DbHelper();

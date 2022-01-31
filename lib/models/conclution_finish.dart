@@ -1,4 +1,4 @@
-import 'package:choicen_robot/models/activity.dart';
+import '../../models/activity.dart';
 
 class ConclutionFinish {
   String? _conclutionFinishId;

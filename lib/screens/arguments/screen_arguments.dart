@@ -1,5 +1,5 @@
-import 'package:choicen_robot/models/activity.dart';
-import 'package:choicen_robot/models/criteria.dart';
+import '../../models/activity.dart';
+import '../../models/criteria.dart';
 
 class ScreenArguments {
   final Function addTx;

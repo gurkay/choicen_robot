@@ -1,6 +1,6 @@
-import 'package:choicen_robot/models/activity.dart';
-import 'package:choicen_robot/services/request/request_activity.dart';
-import 'package:choicen_robot/utilities/i_response.dart';
+import '../../models/activity.dart';
+import '../../services/request/request_activity.dart';
+import '../../utilities/i_response.dart';
 
 abstract class CallBackActivity {
   void onSuccessDoInsertActivity(Activity activity);

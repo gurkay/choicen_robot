@@ -1,4 +1,4 @@
-import 'package:choicen_robot/models/criteria.dart';
+import '../../../models/criteria.dart';
 import 'package:flutter/material.dart';
 
 class CriteriaList extends StatelessWidget {

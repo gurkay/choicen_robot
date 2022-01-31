@@ -1,4 +1,4 @@
-import 'package:choicen_robot/screens/login/screen_login.dart';
+import '../../screens/login/screen_login.dart';
 
 import '../../constants/constants.dart';
 import 'package:flutter/material.dart';

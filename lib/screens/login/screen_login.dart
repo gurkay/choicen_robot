@@ -1,14 +1,14 @@
-import 'package:choicen_robot/components/already_have_an_account_check.dart';
-import 'package:choicen_robot/components/rounded_button.dart';
-import 'package:choicen_robot/components/rounded_input_field.dart';
-import 'package:choicen_robot/components/rounded_password_field.dart';
-import 'package:choicen_robot/models/user.dart';
-import 'package:choicen_robot/screens/home/screen_home.dart';
-import 'package:choicen_robot/screens/singup/screen_singup.dart';
-import 'package:choicen_robot/services/response/response_user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../components/already_have_an_account_check.dart';
+import '../../components/rounded_button.dart';
+import '../../components/rounded_input_field.dart';
+import '../../components/rounded_password_field.dart';
+import '../../models/user.dart';
+import '../../screens/home/screen_home.dart';
+import '../../screens/singup/screen_singup.dart';
+import '../../services/response/response_user.dart';
 import '../../constants/constants.dart';
 
 class ScreenLogin extends StatefulWidget {
@@ -46,7 +46,7 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
 
   void _submit() {
     if (_email == null || _password == null) {
-      _showSnackBar(context, 'Email ve Pasaport Boş Olamaz');
+      _showSnackBar(context, 'Kullanıcı Adı ve Pasaport Boş Olamaz');
       return;
     }
 
@@ -98,7 +98,7 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
             children: [
               SizedBox(height: size.height * 0.03),
               RoundedInputField(
-                hintText: 'Mail Adresiniz',
+                hintText: 'Kullanıcı Adı Giriniz',
                 onChanged: (value) {
                   _email = value;
                 },

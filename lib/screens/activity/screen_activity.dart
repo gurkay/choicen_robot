@@ -1,8 +1,8 @@
-import 'package:choicen_robot/constants/constants.dart';
-import 'package:choicen_robot/models/activity.dart';
-import 'package:choicen_robot/models/category.dart';
-import 'package:choicen_robot/screens/activity/components/activity_list.dart';
-import 'package:choicen_robot/services/response/response_activity.dart';
+import '../../constants/constants.dart';
+import '../../models/activity.dart';
+import '../../models/category.dart';
+import '../../screens/activity/components/activity_list.dart';
+import '../../services/response/response_activity.dart';
 import 'package:flutter/material.dart';
 
 import 'components/new_activity.dart';

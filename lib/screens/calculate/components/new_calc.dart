@@ -1,9 +1,5 @@
-import 'package:choicen_robot/components/rounded_button.dart';
-import 'package:choicen_robot/components/rounded_input_field.dart';
-import 'package:choicen_robot/models/activity.dart';
-import 'package:choicen_robot/models/criteria.dart';
-import 'package:choicen_robot/screens/arguments/screen_arguments.dart';
-import 'package:choicen_robot/screens/calculate/components/get_calculate.dart';
+import '../../../components/rounded_input_field.dart';
+import '../../../screens/arguments/screen_arguments.dart';
 import 'package:flutter/material.dart';
 
 class NewCalc extends StatefulWidget {

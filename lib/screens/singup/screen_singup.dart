@@ -1,11 +1,12 @@
-import 'package:choicen_robot/components/already_have_an_account_check.dart';
-import 'package:choicen_robot/components/rounded_button.dart';
-import 'package:choicen_robot/components/rounded_input_field.dart';
-import 'package:choicen_robot/constants/constants.dart';
-import 'package:choicen_robot/models/user.dart';
-import 'package:choicen_robot/screens/login/screen_login.dart';
-import 'package:choicen_robot/services/response/response_user.dart';
 import 'package:flutter/material.dart';
+
+import '../../components/already_have_an_account_check.dart';
+import '../../components/rounded_button.dart';
+import '../../components/rounded_input_field.dart';
+import '../../constants/constants.dart';
+import '../../models/user.dart';
+import '../../screens/login/screen_login.dart';
+import '../../services/response/response_user.dart';
 
 class ScreenSingup extends StatefulWidget {
   static String routeName = '/screen_singup';
@@ -38,7 +39,7 @@ class _ScreenSingupState extends State<ScreenSingup> implements CallBackUser {
             children: [
               SizedBox(height: size.height * 0.03),
               RoundedInputField(
-                hintText: 'Mail Adresiniz',
+                hintText: 'Kullanıcı Adınız',
                 onChanged: (value) {
                   _userEmail = value;
                 },

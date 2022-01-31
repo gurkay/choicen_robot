@@ -1,6 +1,6 @@
-import 'package:choicen_robot/models/category.dart';
-import 'package:choicen_robot/services/request/request_category.dart';
-import 'package:choicen_robot/utilities/i_response.dart';
+import '../../models/category.dart';
+import '../../services/request/request_category.dart';
+import '../../utilities/i_response.dart';
 
 abstract class CallBackCategory {
   void onSuccessDoInsertCategory(Category category);

@@ -1,6 +1,6 @@
-import 'package:choicen_robot/models/criteria.dart';
-import 'package:choicen_robot/services/request/request_criteria.dart';
-import 'package:choicen_robot/utilities/i_response.dart';
+import '../../models/criteria.dart';
+import '../../services/request/request_criteria.dart';
+import '../../utilities/i_response.dart';
 
 abstract class CallBackCriteria {
   void onSuccessDoInsertCriteria(Criteria criteria);

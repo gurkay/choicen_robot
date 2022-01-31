@@ -1,5 +1,5 @@
-import 'package:choicen_robot/screens/calculate/components/new_calc.dart';
-import 'package:choicen_robot/screens/calculate/screen_calculate.dart';
+import '../../screens/calculate/components/new_calc.dart';
+import '../../screens/calculate/screen_calculate.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/activity/screen_activity.dart';

@@ -1,10 +1,10 @@
-import 'package:choicen_robot/models/user.dart';
-import 'package:choicen_robot/screens/activity/screen_activity.dart';
-import 'package:choicen_robot/screens/calculate/screen_calculate.dart';
-import 'package:choicen_robot/screens/criteria/screen_criteria.dart';
-import 'package:choicen_robot/screens/home/components/category_list.dart';
-import 'package:choicen_robot/services/response/response_category.dart';
-import 'package:choicen_robot/services/response/response_user.dart';
+import '../../models/user.dart';
+import '../../screens/activity/screen_activity.dart';
+import '../../screens/calculate/screen_calculate.dart';
+import '../../screens/criteria/screen_criteria.dart';
+import '../../screens/home/components/category_list.dart';
+import '../../services/response/response_category.dart';
+import '../../services/response/response_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/constants.dart';

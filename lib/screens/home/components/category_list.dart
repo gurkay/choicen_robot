@@ -1,4 +1,4 @@
-import 'package:choicen_robot/models/category.dart';
+import '../../../models/category.dart';
 import 'package:flutter/material.dart';
 
 class CategoryList extends StatelessWidget {

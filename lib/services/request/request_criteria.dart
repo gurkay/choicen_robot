@@ -1,6 +1,6 @@
-import 'package:choicen_robot/models/criteria.dart';
-import 'package:choicen_robot/utilities/db_helper.dart';
-import 'package:choicen_robot/utilities/i_request.dart';
+import '../../models/criteria.dart';
+import '../../utilities/db_helper.dart';
+import '../../utilities/i_request.dart';
 
 class RequestCriteria implements IRequest {
   DbHelper dbHelper = new DbHelper();

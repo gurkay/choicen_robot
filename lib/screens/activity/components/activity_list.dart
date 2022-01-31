@@ -1,4 +1,4 @@
-import 'package:choicen_robot/models/activity.dart';
+import '../../../models/activity.dart';
 import 'package:flutter/material.dart';
 
 class ActivityList extends StatelessWidget {

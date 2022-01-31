@@ -1,19 +1,20 @@
-import 'package:choicen_robot/models/activity.dart';
-import 'package:choicen_robot/models/calculate.dart';
-import 'package:choicen_robot/models/category.dart';
-import '../../models/conclution.dart';
-import 'package:choicen_robot/models/conclution_finish.dart';
-import 'package:choicen_robot/models/criteria.dart';
-import 'package:choicen_robot/services/response/response_activity.dart';
-import 'package:choicen_robot/services/response/response_calculate.dart';
-import 'package:choicen_robot/services/response/response_conclution.dart';
-import 'package:choicen_robot/services/response/response_conclution_finish.dart';
-import 'package:choicen_robot/services/response/response_criteria.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'components/calculate_list.dart';
-import 'components/get_calculate.dart';
-import 'components/new_calculate.dart';
+
+import '../../models/activity.dart';
+import '../../models/calculate.dart';
+import '../../models/category.dart';
+import '../../models/conclution.dart';
+import '../../models/conclution_finish.dart';
+import '../../models/criteria.dart';
+import '../../services/response/response_activity.dart';
+import '../../services/response/response_calculate.dart';
+import '../../services/response/response_conclution.dart';
+import '../../services/response/response_conclution_finish.dart';
+import '../../services/response/response_criteria.dart';
+import '../../screens/calculate/components/calculate_list.dart';
+import '../../screens/calculate/components/get_calculate.dart';
+import '../../screens/calculate/components/new_calculate.dart';
 
 class ScreenCalculate extends StatefulWidget {
   static String routeName = '/screen_calculate';

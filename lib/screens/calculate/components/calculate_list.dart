@@ -1,5 +1,5 @@
-import 'package:choicen_robot/models/conclution.dart';
-import 'package:choicen_robot/models/conclution_finish.dart';
+import '../../../models/conclution.dart';
+import '../../../models/conclution_finish.dart';
 import 'package:flutter/material.dart';
 
 class CalculateList extends StatelessWidget {

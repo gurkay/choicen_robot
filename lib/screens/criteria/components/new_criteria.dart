@@ -1,5 +1,5 @@
-import 'package:choicen_robot/components/rounded_button.dart';
-import 'package:choicen_robot/components/rounded_input_field.dart';
+import '../../../components/rounded_button.dart';
+import '../../../components/rounded_input_field.dart';
 import 'package:flutter/material.dart';
 
 class NewCriteria extends StatefulWidget {

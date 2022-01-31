@@ -1,9 +1,9 @@
-import 'package:choicen_robot/constants/constants.dart';
-import 'package:choicen_robot/models/category.dart';
-import 'package:choicen_robot/models/criteria.dart';
-import 'package:choicen_robot/screens/criteria/components/criteria_list.dart';
-import 'package:choicen_robot/screens/criteria/components/new_criteria.dart';
-import 'package:choicen_robot/services/response/response_criteria.dart';
+import '../../constants/constants.dart';
+import '../../models/category.dart';
+import '../../models/criteria.dart';
+import '../../screens/criteria/components/criteria_list.dart';
+import '../../screens/criteria/components/new_criteria.dart';
+import '../../services/response/response_criteria.dart';
 import 'package:flutter/material.dart';
 
 class ScreenCriteria extends StatefulWidget {

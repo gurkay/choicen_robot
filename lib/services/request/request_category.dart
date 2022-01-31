@@ -1,6 +1,6 @@
-import 'package:choicen_robot/models/category.dart';
-import 'package:choicen_robot/utilities/db_helper.dart';
-import 'package:choicen_robot/utilities/i_request.dart';
+import '../../models/category.dart';
+import '../../utilities/db_helper.dart';
+import '../../utilities/i_request.dart';
 
 class RequestCategory implements IRequest {
   DbHelper dbHelper = new DbHelper();
