@@ -100,8 +100,7 @@ class _NewCalculateState extends State<NewCalculate> {
                           j < widget._listCriterias.length;
                           j++, _listCount++)
                         RoundedInputField(
-                          hintText:
-                              '${widget._listCriterias[j].criteriaName} index ::: $_listCount',
+                          hintText: '${widget._listCriterias[j].criteriaName}',
                           controller: _listTextEditingController[_listCount],
                           onChanged: (_) => _submitData,
                           keyboardType: TextInputType.number,

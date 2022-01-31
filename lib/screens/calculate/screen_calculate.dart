@@ -15,6 +15,7 @@ import '../../services/response/response_criteria.dart';
 import '../../screens/calculate/components/calculate_list.dart';
 import '../../screens/calculate/components/get_calculate.dart';
 import '../../screens/calculate/components/new_calculate.dart';
+import '../../screens/calculate/components/update_calculate.dart';
 
 class ScreenCalculate extends StatefulWidget {
   static String routeName = '/screen_calculate';
@@ -64,8 +65,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     String _conclutionId = DateTime.now().toString();
 
     var currentTime = DateTime.now().toString().substring(0, 16);
-    String _conclutionName =
-        _category.categoryName + ' \n' + currentTime + '\n';
+    String _conclutionName = _category.categoryName + ' ' + currentTime;
     String _conclutionDate = DateTime.now().toString();
 
     await _responseConclution!.doInsert(
@@ -152,18 +152,46 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
   void _startAddCalculate(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return GestureDetector(
-            onTap: () {},
-            child: NewCalculate(
-              _addNewCalculate,
-              _listActivities,
-              _listCriterias,
-            ),
-            behavior: HitTestBehavior.opaque,
-          );
-        });
+      context: context,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewCalculate(
+            _addNewCalculate,
+            _listActivities,
+            _listCriterias,
+          ),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
+  void _addUpdateCalculate(
+    List<double> txAmount,
+    Conclution conclution,
+    Calculate calculate,
+  ) {}
+
+  void _startUpdateCalculate(
+    BuildContext context,
+    Conclution _conclution,
+    Calculate _calculate,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: UpdateCalculate(
+            updateTx: _addUpdateCalculate,
+            conclution: _conclution,
+            calculate: _calculate,
+          ),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
   }
 
   void _deleteCalculate(String conclutionId) async {
