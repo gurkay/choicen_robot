@@ -40,7 +40,7 @@ class CalculateList extends StatelessWidget {
                     children: [
                       ListTile(
                         title: Text(
-                            'conclutions[index].conclutionName:::${conclutions[index].conclutionName}'),
+                            '${conclutions[index].conclutionName}::: id:${conclutions[index].conclutionId}'),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
                           color: Theme.of(context).errorColor,

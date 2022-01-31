@@ -70,15 +70,20 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   void _addNewCalculate(List<double> txAmount) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
+    var _conclutionName =
+        _category.categoryName + ' \n' + DateTime.now().toString() + '\n';
+
     await _responseConclution!.doInsert(
       Conclution.withConclutionId(
         DateTime.now().toString(),
         _category.categoryId,
-        _category.categoryName,
+        _conclutionName,
         DateTime.now().toString(),
       ),
     );
-    await getLists();
+
+    getLists();
+
     print('screen_calculate:::txAmount.length:::${txAmount.length}');
     print('screen_calculate:::txAmount[0]:::${txAmount[0]}');
     print('screen_calculate:::_listConclutions:::${_listConclutions}');
@@ -189,7 +194,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
         });
   }
 
-  void _deleteCalculate(int conclutionId) async {
+  void _deleteCalculate(String conclutionId) async {
     await _responseConclution!.doDelete(conclutionId);
     await _responseCalculate!.doDelete(conclutionId);
     await _responseConclutionFinish!.doDelete(conclutionId);
