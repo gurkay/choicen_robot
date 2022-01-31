@@ -49,7 +49,11 @@ class CalculateList extends StatelessWidget {
                         ),
                       ),
                       for (var i = 0; i < conclutionFinies.length; i++)
-                        Text('${conclutionFinies[i].conclutionFinishValue}'),
+                        conclutions[index].conclutionId ==
+                                conclutionFinies[i].conclutionId
+                            ? Text(
+                                '${conclutionFinies[i].conclutionFinishValue}')
+                            : Text(''),
                     ],
                   ),
                 );

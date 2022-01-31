@@ -18,15 +18,13 @@ class RequestConclution implements IRequest {
 
   @override
   Future<Conclution> insert(dynamic conclution) async {
+    print(
+        'request_conclution:::insert:::conclution.id:::${conclution.conclutionId}');
+
     var db = await dbHelper.db;
     var result = await db!.insert(dbHelper.conclutionTable, conclution.toMap());
-    Conclution _conclution = Conclution.withConclutionId(
-      conclution.conclutionId,
-      conclution.categoryId,
-      conclution.conclutionName,
-      conclution.conclutionDate,
-    );
-    return _conclution;
+
+    return conclution;
   }
 
   @override
