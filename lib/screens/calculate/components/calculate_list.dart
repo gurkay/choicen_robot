@@ -1,5 +1,3 @@
-import 'package:choicen_robot/models/activity.dart';
-import 'package:choicen_robot/models/calculate.dart';
 import 'package:choicen_robot/models/conclution.dart';
 import 'package:choicen_robot/models/conclution_finish.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +11,7 @@ class CalculateList extends StatelessWidget {
     this.conclutions,
     this.conclutionFinies,
     this.deleteCalculate,
-  ) {
-    print('calculate_list:::conclutions:::${conclutions.length}');
-    print('calculate_list:::conclutionFinies:::${conclutionFinies.length}');
-  }
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +34,7 @@ class CalculateList extends StatelessWidget {
                   child: Column(
                     children: [
                       ListTile(
-                        title: Text(
-                            '${conclutions[index].conclutionName}::: id:${conclutions[index].conclutionId}'),
+                        title: Text('${conclutions[index].conclutionName}'),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
                           color: Theme.of(context).errorColor,
@@ -52,7 +46,7 @@ class CalculateList extends StatelessWidget {
                         conclutions[index].conclutionId ==
                                 conclutionFinies[i].conclutionId
                             ? Text(
-                                '${conclutionFinies[i].conclutionFinishValue}')
+                                '${conclutionFinies[i].activityName} : ${conclutionFinies[i].conclutionFinishValue}')
                             : Container(),
                     ],
                   ),
