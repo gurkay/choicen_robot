@@ -48,7 +48,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     _responseConclution = ResponseConclution(this);
     _responseConclutionFinish = ResponseConclutionFinish(this);
   }
-  List<Calculate> _categoryCalculate = [];
+  List<Calculate> _listCalculate = [];
   List<Conclution> _listConclutions = [];
   List<ConclutionFinish> _listConclutionFinies = [];
   List<Activity> _listActivities = [];
@@ -79,6 +79,16 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
     for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
+        print(
+            'screen_calculate:::_addNewCalculate:::sharedPreferences.getInt(userId):::${sharedPreferences.getInt('userId')}');
+        print(
+            'screen_calculate:::_addNewCalculate:::_conclutionId:::${_conclutionId}');
+        print(
+            'screen_calculate:::_addNewCalculate:::_listActivities[$i].activityId:::${_listActivities[i].activityId}');
+        print(
+            'screen_calculate:::_addNewCalculate:::_listCriterias[$j].criteriaId:::${_listCriterias[j].criteriaId}');
+        print(
+            'screen_calculate:::_addNewCalculate:::txAmount[$_listCount]:::${txAmount[_listCount]}');
         await _responseCalculate!.doInsert(
           Calculate(
             sharedPreferences.getInt('userId'),
@@ -176,8 +186,10 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   void _startUpdateCalculate(
     BuildContext context,
     Conclution _conclution,
-    Calculate _calculate,
-  ) {
+  ) async {
+    print(
+        'screen_calculate:::_startUpdateCalculate:::_conclution.conclutionId:::${_conclution.conclutionId}');
+    await _responseCalculate!.doListCalculate(_conclution.conclutionId);
     showModalBottomSheet(
       context: context,
       builder: (_) {
@@ -186,7 +198,9 @@ class _ScreenCalculateState extends State<ScreenCalculate>
           child: UpdateCalculate(
             updateTx: _addUpdateCalculate,
             conclution: _conclution,
-            calculate: _calculate,
+            listCalculate: _listCalculate,
+            listActivities: _listActivities,
+            listCriterias: _listCriterias,
           ),
           behavior: HitTestBehavior.opaque,
         );
@@ -232,9 +246,10 @@ class _ScreenCalculateState extends State<ScreenCalculate>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CalculateList(
-              _listConclutions,
-              _listConclutionFinies,
-              _deleteCalculate,
+              conclutions: _listConclutions,
+              conclutionFinies: _listConclutionFinies,
+              deleteCalculate: _deleteCalculate,
+              startUpdateCalculate: _startUpdateCalculate,
             ),
           ],
         ),
@@ -248,7 +263,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
   @override
   void onErrorCalculate(String error) {
-    // TODO: implement onErrorCalculate
+    print('screen_calculate:::onErrorCalculate:::$error');
   }
 
   @override
@@ -258,12 +273,16 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
   @override
   void onSuccessDoInsertCalculate(Calculate calculate) {
-    // TODO: implement onSuccessDoInsertCalculate
+    print(
+        'screen_calculate:::onSuccessDoInsertCalculate:::calculate.conclutionId${calculate.conclutionId}');
   }
 
   @override
-  void onSuccessDoListCalculate(List<Calculate> conclutions) {
-    print('screen_calculate:::onSuccessDoListCalculate:::$conclutions');
+  void onSuccessDoListCalculate(List<Calculate> calculate) {
+    setState(() {
+      _listCalculate = calculate;
+    });
+    print('screen_calculate:::onSuccessDoListCalculate:::$_listCalculate');
   }
 
   @override

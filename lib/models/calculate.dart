@@ -34,7 +34,7 @@ class Calculate {
 
   String get conclutionId => _conclutionId ?? '';
   set conclutionId(String newConclutionId) {
-    if (newConclutionId != 0) {
+    if (newConclutionId != '') {
       this._conclutionId = newConclutionId;
     }
   }

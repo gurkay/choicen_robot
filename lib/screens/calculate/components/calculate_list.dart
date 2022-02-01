@@ -6,12 +6,14 @@ class CalculateList extends StatelessWidget {
   final List<Conclution> conclutions;
   final List<ConclutionFinish> conclutionFinies;
   final Function deleteCalculate;
+  final Function startUpdateCalculate;
 
-  CalculateList(
-    this.conclutions,
-    this.conclutionFinies,
-    this.deleteCalculate,
-  );
+  CalculateList({
+    required this.conclutions,
+    required this.conclutionFinies,
+    required this.deleteCalculate,
+    required this.startUpdateCalculate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,13 @@ class CalculateList extends StatelessWidget {
                   child: Column(
                     children: [
                       ListTile(
-                        title: Text('${conclutions[index].conclutionName}'),
+                        leading: IconButton(
+                          icon: const Icon(Icons.edit),
+                          color: Colors.blue,
+                          onPressed: () =>
+                              startUpdateCalculate(context, conclutions[index]),
+                        ),
+                        title: Text(conclutions[index].conclutionName),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
                           color: Theme.of(context).errorColor,

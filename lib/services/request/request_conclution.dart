@@ -44,7 +44,7 @@ class RequestConclution implements IRequest {
     var db = await dbHelper.db;
     List<Map<String, Object?>> result = await db!.query(
       dbHelper.conclutionTable,
-      where: '${dbHelper.colCategoryId} = ?',
+      where: '${dbHelper.colCatTabCategoryId} = ?',
       whereArgs: [categoryId],
     );
 
