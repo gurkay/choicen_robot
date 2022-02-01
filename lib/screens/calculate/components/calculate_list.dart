@@ -42,11 +42,48 @@ class CalculateList extends StatelessWidget {
                               deleteCalculate(conclutions[index].conclutionId),
                         ),
                       ),
-                      for (var i = 0; i < conclutionFinies.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              'Sno',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              'Adı',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              'Değer',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      for (var i = 0, rangeCount = 1;
+                          i < conclutionFinies.length;
+                          i++)
                         conclutions[index].conclutionId ==
                                 conclutionFinies[i].conclutionId
-                            ? Text(
-                                '${conclutionFinies[i].activityName} : ${conclutionFinies[i].conclutionFinishValue}')
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 15.0,
+                                  right: 15.0,
+                                  bottom: 10.0,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('${rangeCount++}'),
+                                    Text('${conclutionFinies[i].activityName}'),
+                                    Text(
+                                        '${conclutionFinies[i].conclutionFinishValue}'),
+                                  ],
+                                ),
+                              )
                             : Container(),
                     ],
                   ),
