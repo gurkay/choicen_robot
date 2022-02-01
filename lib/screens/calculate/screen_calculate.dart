@@ -79,16 +79,6 @@ class _ScreenCalculateState extends State<ScreenCalculate>
 
     for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
       for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
-        print(
-            'screen_calculate:::_addNewCalculate:::sharedPreferences.getInt(userId):::${sharedPreferences.getInt('userId')}');
-        print(
-            'screen_calculate:::_addNewCalculate:::_conclutionId:::${_conclutionId}');
-        print(
-            'screen_calculate:::_addNewCalculate:::_listActivities[$i].activityId:::${_listActivities[i].activityId}');
-        print(
-            'screen_calculate:::_addNewCalculate:::_listCriterias[$j].criteriaId:::${_listCriterias[j].criteriaId}');
-        print(
-            'screen_calculate:::_addNewCalculate:::txAmount[$_listCount]:::${txAmount[_listCount]}');
         await _responseCalculate!.doInsert(
           Calculate(
             sharedPreferences.getInt('userId'),
@@ -180,15 +170,24 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   void _addUpdateCalculate(
     List<double> txAmount,
     Conclution conclution,
-    Calculate calculate,
-  ) {}
+    List<Calculate> listCalculate,
+  ) async {
+    await _responseConclution!.doUpdate(conclution);
+    for (int i = 0; i < _listCalculate.length; i++) {
+      await _responseCalculate!.doUpdate(_listCalculate[i]);
+    }
+    final newTxConclution = Conclution.withConclutionId(
+      conclution.conclutionId,
+      _category.categoryId,
+      conclution.conclutionName,
+      conclution.conclutionDate,
+    );
+  }
 
   void _startUpdateCalculate(
     BuildContext context,
     Conclution _conclution,
   ) async {
-    print(
-        'screen_calculate:::_startUpdateCalculate:::_conclution.conclutionId:::${_conclution.conclutionId}');
     await _responseCalculate!.doListCalculate(_conclution.conclutionId);
     showModalBottomSheet(
       context: context,
@@ -377,5 +376,15 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     setState(() {
       _listConclutionFinies = conclutionFinies;
     });
+  }
+
+  @override
+  void onSuccessDoUpdateConclution(int result) {
+    print('screen_calculate:::onSuccessDoUpdateConclution:::$result');
+  }
+
+  @override
+  void onSuccessDoUpdateCalculate(int result) {
+    print('screen_calculate:::onSuccessDoUpdateCalculate:::$result');
   }
 }

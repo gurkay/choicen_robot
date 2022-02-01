@@ -67,7 +67,7 @@ class Calculate {
     map['conclutionId'] = _conclutionId;
     map['activityId'] = _activityId;
     map['criteriaId'] = _criteriaId;
-    map['amount'] = _amount;
+    map['calculateAmount'] = _amount;
     return map;
   }
 
@@ -77,6 +77,6 @@ class Calculate {
     _conclutionId = map['conclutionId'];
     _activityId = map['activityId'];
     _criteriaId = map['criteriaId'];
-    _amount = map['amount'];
+    _amount = map['calculateAmount'];
   }
 }

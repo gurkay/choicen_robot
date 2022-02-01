@@ -19,27 +19,8 @@ class RequestCalculate implements IRequest {
   @override
   Future<Calculate> insert(dynamic calculate) async {
     var db = await dbHelper.db;
-    print(
-        'request_calculate:::insert:::calculate.userId:::${calculate.userId}');
-    print(
-        'request_calculate:::insert:::calculate.conclutionId:::${calculate.conclutionId}');
-    print(
-        'request_calculate:::insert:::calculate.activityId:::${calculate.activityId}');
-    print(
-        'request_calculate:::insert:::calculate.criteriaId:::${calculate.criteriaId}');
-    print(
-        'request_calculate:::insert:::calculate.amount:::${calculate.amount}');
-    var calMap = calculate.toMap();
-    print('request_calculate:::insert:::calMap[userId]:::${calMap['userId']}');
-    print(
-        'request_calculate:::insert:::calMap[conclutionId]:::${calMap['conclutionId']}');
-    print(
-        'request_calculate:::insert:::calMap[activityId]:::${calMap['activityId']}');
-    print(
-        'request_calculate:::insert:::calMap[criteriaId]:::${calMap['criteriaId']}');
-    print('request_calculate:::insert:::calMap[amount]:::${calMap['amount']}');
-    int result = await db!.insert(dbHelper.calculateTable, calculate.toMap());
-    print('request_calculate:::insert:::result:::${result}');
+    var result = await db!.insert(dbHelper.calculateTable, calculate.toMap());
+
     Calculate _calculate = Calculate.withCalculateId(
       result,
       calculate.userId,
@@ -58,22 +39,27 @@ class RequestCalculate implements IRequest {
   }
 
   @override
-  update(data) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<int> update(dynamic calculate) async {
+    var db = await dbHelper.db;
+    var result = await db!.update(
+      dbHelper.calculateTable,
+      calculate.toMap(),
+      where: '${dbHelper.colCalculateId} = ?',
+      whereArgs: [calculate.calculateId],
+    );
+    return result;
   }
 
   Future<List<Calculate>> getListCalculates(String conclutionId) async {
     List<Calculate> _calculates = <Calculate>[];
     var db = await dbHelper.db;
-    print(
-        'request_calculate:::getListCalculates:::conclutionId::${conclutionId}');
-    print(
-        'request_calculate:::getListCalculates:::dbHelper.colConclutionTableConclutionId::${dbHelper.colConclutionTableConclutionId}');
-    List<Map<String, Object?>> result =
-        await db!.rawQuery('SELECT * FROM ${dbHelper.calculateTable}');
-    print(
-        'request_calculate:::getListCalculates:::result.lenght::${result.length}');
+
+    List<Map<String, Object?>> result = await db!.query(
+      dbHelper.calculateTable,
+      where: '${dbHelper.colConclutionTableConclutionId} = ?',
+      whereArgs: [conclutionId],
+    );
+
     for (var i = 0; i < result.length; i++) {
       _calculates.add(Calculate.fromMapObject(result[i]));
     }

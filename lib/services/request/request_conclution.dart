@@ -34,9 +34,15 @@ class RequestConclution implements IRequest {
   }
 
   @override
-  update(data) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<int> update(dynamic conclution) async {
+    var db = await dbHelper.db;
+    var result = await db!.update(
+      dbHelper.conclutionTable,
+      conclution.toMap(),
+      where: '${dbHelper.colConclutionId} = ?',
+      whereArgs: [conclution.conclutionId],
+    );
+    return result;
   }
 
   Future<List<Conclution>> getListConclutions(int categoryId) async {

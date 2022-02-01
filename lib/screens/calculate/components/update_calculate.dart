@@ -46,7 +46,11 @@ class _UpdateCalculateState extends State<UpdateCalculate> {
       }
     }
 
-    widget.updateTx(_listEnteredAmount);
+    widget.updateTx(
+      _listEnteredAmount,
+      widget.conclution,
+      widget.listCalculate,
+    );
     Navigator.of(context).pop();
   }
 
@@ -123,7 +127,7 @@ class _UpdateCalculateState extends State<UpdateCalculate> {
                                   widget.listCriterias.length))
                           ? const Text('')
                           : RoundedButton(
-                              text: 'Ekle',
+                              text: 'Güncelle',
                               press: _submitData,
                             ),
                     ],

@@ -6,6 +6,7 @@ abstract class CallBackConclution {
   void onSuccessDoInsertConclution(Conclution conclution);
   void onSuccessDoListConclution(List<Conclution> conclutions);
   void onSuccessDoDeleteConclution(int result);
+  void onSuccessDoUpdateConclution(int result);
   void onErrorConclution(String error);
 }
 
@@ -39,9 +40,12 @@ class ResponseConclution implements IResponse {
   }
 
   @override
-  doUpdate(data) {
-    // TODO: implement doUpdate
-    throw UnimplementedError();
+  doUpdate(dynamic conclution) {
+    requestConclution
+        .update(conclution)
+        .then((value) => _callBackConclution.onSuccessDoUpdateConclution(value))
+        .catchError((onError) =>
+            _callBackConclution.onErrorConclution(onError.toString()));
   }
 
   doListConclution(dynamic categoryId) {

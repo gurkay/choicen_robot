@@ -6,6 +6,7 @@ abstract class CallBackCalculate {
   void onSuccessDoInsertCalculate(Calculate calculate);
   void onSuccessDoListCalculate(List<Calculate> calculates);
   void onSuccessDoDeleteCalculate(int result);
+  void onSuccessDoUpdateCalculate(int result);
   void onErrorCalculate(String error);
 }
 
@@ -39,9 +40,12 @@ class ResponseCalculate implements IResponse {
   }
 
   @override
-  doUpdate(data) {
-    // TODO: implement doUpdate
-    throw UnimplementedError();
+  doUpdate(dynamic calculate) {
+    requestCalculate
+        .update(calculate)
+        .then((value) => _callBackCalculate.onSuccessDoUpdateCalculate(value))
+        .catchError((onError) =>
+            _callBackCalculate.onErrorCalculate(onError.toString()));
   }
 
   doListCalculate(dynamic conclutionId) {
