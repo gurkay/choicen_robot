@@ -86,7 +86,7 @@ class CalculateList extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text('${rangeCount++}'),
-                                    Text('${conclutionFinies[i].activityName}'),
+                                    Text(conclutionFinies[i].activityName),
                                     Text(
                                         '${conclutionFinies[i].conclutionFinishValue}'),
                                   ],

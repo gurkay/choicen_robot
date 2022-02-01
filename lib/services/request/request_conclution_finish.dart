@@ -10,7 +10,7 @@ class RequestConclutionFinish implements IRequest {
     var db = await dbHelper.db;
     var result = await db!.delete(
       dbHelper.conclutionFinishTable,
-      where: '${dbHelper.colConclutionId} = ?',
+      where: '${dbHelper.colConclutionTabConclutionId} = ?',
       whereArgs: [conclutionId],
     );
     return result;

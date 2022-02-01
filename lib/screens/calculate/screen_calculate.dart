@@ -176,12 +176,46 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     for (int i = 0; i < _listCalculate.length; i++) {
       await _responseCalculate!.doUpdate(_listCalculate[i]);
     }
-    final newTxConclution = Conclution.withConclutionId(
-      conclution.conclutionId,
-      _category.categoryId,
-      conclution.conclutionName,
-      conclution.conclutionDate,
+    await _responseConclutionFinish!.doDelete(conclution.conclutionId);
+
+    GetCalculate getCalculate = GetCalculate(
+      row: _listActivities.length,
+      col: _listCriterias.length,
+      listEnteredAmount: txAmount,
+      listCriterias: _listCriterias,
     );
+
+    List<double> generalTotalUtilityValue =
+        getCalculate.generalTotalUtilityValue();
+    double avarageTotalUtility =
+        getCalculate.avaregeGeneralTotalUtilityValue(generalTotalUtilityValue);
+
+    for (var i = 0; i < generalTotalUtilityValue.length; i++) {
+      setState(() {
+        _itemsConclutionFinish.add(
+          {
+            'activityName': _listActivities[i].activityName,
+            'value': generalTotalUtilityValue[i],
+          },
+        );
+      });
+    }
+
+    _itemsConclutionFinish.sort((a, b) => b['value'].compareTo(a['value']));
+    for (var i = 0; i < generalTotalUtilityValue.length; i++) {
+      if (_itemsConclutionFinish[i]['value'] > avarageTotalUtility) {
+        String _conclutionFinishId = DateTime.now().toString();
+        await _responseConclutionFinish!.doInsert(
+          ConclutionFinish.withConclutionFinishId(
+            _conclutionFinishId,
+            conclution.conclutionId,
+            _itemsConclutionFinish[i]['activityName'],
+            _itemsConclutionFinish[i]['value'],
+          ),
+        );
+      }
+    }
+    getLists();
   }
 
   void _startUpdateCalculate(
