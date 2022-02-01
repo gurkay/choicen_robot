@@ -173,9 +173,26 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     List<Calculate> listCalculate,
   ) async {
     await _responseConclution!.doUpdate(conclution);
-    for (int i = 0; i < _listCalculate.length; i++) {
-      await _responseCalculate!.doUpdate(_listCalculate[i]);
+    for (var i = 0; i < _listCalculate.length; i++) {
+      print(
+          'screen_calculate:::_addUpdateCalculate:::fiyat: ${_listCalculate[i].amount}');
     }
+
+    for (int i = 0, _listCount = 0; i < _listActivities.length; i++) {
+      for (int j = 0; j < _listCriterias.length; j++, _listCount++) {
+        await _responseCalculate!.doUpdate(
+          Calculate.withCalculateId(
+            listCalculate[_listCount].calculateId,
+            listCalculate[_listCount].userId,
+            conclution.conclutionId,
+            _listActivities[i].activityId,
+            _listCriterias[j].criteriaId,
+            txAmount[_listCount],
+          ),
+        );
+      }
+    }
+
     await _responseConclutionFinish!.doDelete(conclution.conclutionId);
 
     GetCalculate getCalculate = GetCalculate(
@@ -189,7 +206,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
         getCalculate.generalTotalUtilityValue();
     double avarageTotalUtility =
         getCalculate.avaregeGeneralTotalUtilityValue(generalTotalUtilityValue);
-
+    _itemsConclutionFinish.clear();
     for (var i = 0; i < generalTotalUtilityValue.length; i++) {
       setState(() {
         _itemsConclutionFinish.add(
@@ -223,6 +240,7 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     Conclution _conclution,
   ) async {
     await _responseCalculate!.doListCalculate(_conclution.conclutionId);
+
     showModalBottomSheet(
       context: context,
       builder: (_) {
@@ -255,6 +273,13 @@ class _ScreenCalculateState extends State<ScreenCalculate>
   }
 
   getLists() async {
+    _listActivities.clear();
+    _listCalculate.clear();
+    _listConclutionFinies.clear();
+    _listConclutions.clear();
+    _listCriterias.clear();
+    _listEnteredAmount.clear();
+    _listTextEditingController.clear();
     await _responseActivity!.doListActivity(_category.categoryId);
     await _responseCriteria!.doListCriteria(_category.categoryId);
     await _responseConclution!.doListConclution(_category.categoryId);
@@ -315,7 +340,9 @@ class _ScreenCalculateState extends State<ScreenCalculate>
     setState(() {
       _listCalculate = calculate;
     });
-    print('screen_calculate:::onSuccessDoListCalculate:::$_listCalculate');
+
+    print(
+        'screen_calculate:::onSuccessDoListCalculate:::fiyat - 0: ${calculate[0].amount}');
   }
 
   @override
