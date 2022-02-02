@@ -132,7 +132,8 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
 
   @override
   void onUserError(String error) {
-    _showSnackBar(context, 'onLoginError ::: $error');
+    print('screen_login:::onUserError:::$error');
+    _showSnackBar(context, 'Kayıt Bulunamadı');
   }
 
   @override
