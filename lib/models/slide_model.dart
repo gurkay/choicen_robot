@@ -41,28 +41,28 @@ List<SliderModel> getSlides() {
   SliderModel sliderModel = SliderModel();
 
   //1
-  sliderModel
-      .setDesc("Discover a Food Courner offering the best fast food near you");
-  sliderModel.setTitle("Search......");
-  sliderModel.setImageAssetPath("assets/images/codeplayon.png");
+  sliderModel.setDesc(
+      "Bu uygulamanın amacı bir çok kriterli karar verme problemlerinde en çok fayda sağlayan kriteri seçmeyi hedeflemektedir.");
+  sliderModel.setTitle("Tespit Edilir ...");
+  sliderModel.setImageAssetPath("assets/images/problemDetect.png");
   slides.add(sliderModel);
 
   sliderModel = SliderModel();
 
   //2
   sliderModel.setDesc(
-      "Our food plan is filled with delicious seasonal vegetables, whole grains, fast food , burgger , pizza etc.");
-  sliderModel.setTitle("Order..... ");
-  sliderModel.setImageAssetPath("assets/images/codeplayon2.png");
+      "Günümüzün karmaşık ve zor koşulları, problemleri hızlı ve kolay çözüm üreterek objektif bir seçim yapmayı amacıyla seçenekler ve kriterler belirlenir.");
+  sliderModel.setTitle("Seçenekleri ve Kriterleri Belirle ... ");
+  sliderModel.setImageAssetPath("assets/images/criterias.jpeg");
   slides.add(sliderModel);
 
   sliderModel = SliderModel();
 
   //3
   sliderModel.setDesc(
-      "Food delivery or pickup from local restaurants, Explore restaurants that deliver near you.");
-  sliderModel.setTitle("Deliver........");
-  sliderModel.setImageAssetPath("assets/images/codeplayon3.png");
+      " MAUT (Multi Attribute 	Utility Theory) hesaplama yöntemini kullanarak karar vermenize yardımcı olacaktır.");
+  sliderModel.setTitle("Hesaplama ...");
+  sliderModel.setImageAssetPath("assets/images/calculate.png");
   slides.add(sliderModel);
 
   sliderModel = SliderModel();

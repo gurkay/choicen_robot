@@ -36,14 +36,6 @@ class _ScreenHomeState extends State<ScreenHome> implements CallBackCategory {
   void _addNewCategory(String txCategoryName) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    print('screen_home:::_addNewCategory:::txCategoryName:::${txCategoryName}');
-    print(
-        'screen_home:::_addNewCategory:::${sharedPreferences.getInt('userId')}');
-    print(
-        'screen_home:::_addNewCategory:::${sharedPreferences.getString('userEmail')}');
-    print(
-        'screen_home:::_addNewCategory:::${sharedPreferences.getString('userPassword')}');
-    // print('screen_home:::_category!.categoryId:::${_category!.categoryId}');
     await _responseCategory!.doInsert(
       Category(
         sharedPreferences.getInt('userId'),

@@ -1,3 +1,4 @@
+import 'package:choicen_robot/screens/welcome/screen_welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -66,6 +67,10 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
     setState(() {
       _loginStatus = LoginStatus.notSignIn;
     });
+    Navigator.pushNamed(
+      context,
+      ScreenWelcome.routeName,
+    );
   }
 
   @override
@@ -89,44 +94,38 @@ class _ScreenLoginState extends State<ScreenLogin> implements CallBackUser {
   Scaffold loginStatusNotSignIn() {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(cTitleScreenLogin),
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(height: size.height * 0.03),
-              RoundedInputField(
-                hintText: 'Kullanıcı Adı Giriniz',
-                onChanged: (value) {
-                  _email = value;
-                },
-              ),
-              SizedBox(height: size.height * 0.03),
-              RoundedPasswordField(
-                hintText: 'Şifrenizi Giriniz',
-                onChanged: (value) {
-                  _password = value;
-                },
-              ),
-              SizedBox(height: size.height * 0.03),
-              RoundedButton(
-                text: 'Giris',
-                press: _submit,
-              ),
-              SizedBox(height: size.height * 0.03),
-              AlreadyHaveAnAccountCheck(
-                press: () {
-                  Navigator.pushNamed(
-                    context,
-                    ScreenSingup.routeName,
-                  );
-                },
-              )
-            ],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: size.height * 0.03),
+          RoundedInputField(
+            hintText: 'Kullanıcı Adı Giriniz',
+            onChanged: (value) {
+              _email = value;
+            },
           ),
-        ),
+          SizedBox(height: size.height * 0.03),
+          RoundedPasswordField(
+            hintText: 'Şifrenizi Giriniz',
+            onChanged: (value) {
+              _password = value;
+            },
+          ),
+          SizedBox(height: size.height * 0.03),
+          RoundedButton(
+            text: 'Giris',
+            press: _submit,
+          ),
+          SizedBox(height: size.height * 0.03),
+          AlreadyHaveAnAccountCheck(
+            press: () {
+              Navigator.pushNamed(
+                context,
+                ScreenSingup.routeName,
+              );
+            },
+          )
+        ],
       ),
     );
   }

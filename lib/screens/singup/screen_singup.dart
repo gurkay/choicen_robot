@@ -28,47 +28,39 @@ class _ScreenSingupState extends State<ScreenSingup> implements CallBackUser {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(cTitleScreenSingUp),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: size.height * 0.03),
-              RoundedInputField(
-                hintText: 'Kullanıcı Adınız',
-                onChanged: (value) {
-                  _userEmail = value;
-                },
-              ),
-              SizedBox(height: size.height * 0.03),
-              RoundedInputField(
-                hintText: 'Sifreniz',
-                onChanged: (value) {
-                  _userPassword = value;
-                },
-              ),
-              SizedBox(height: size.height * 0.03),
-              RoundedButton(
-                text: 'Kaydet',
-                press: _save,
-              ),
-              SizedBox(height: size.height * 0.03),
-              AlreadyHaveAnAccountCheck(
-                login: false,
-                press: () {
-                  Navigator.pushNamed(
-                    context,
-                    ScreenLogin.routeName,
-                  );
-                },
-              ),
-            ],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: size.height * 0.03),
+          RoundedInputField(
+            hintText: 'Kullanıcı Adınız',
+            onChanged: (value) {
+              _userEmail = value;
+            },
           ),
-        ),
+          SizedBox(height: size.height * 0.03),
+          RoundedInputField(
+            hintText: 'Sifreniz',
+            onChanged: (value) {
+              _userPassword = value;
+            },
+          ),
+          SizedBox(height: size.height * 0.03),
+          RoundedButton(
+            text: 'Kaydet',
+            press: _save,
+          ),
+          SizedBox(height: size.height * 0.03),
+          AlreadyHaveAnAccountCheck(
+            login: false,
+            press: () {
+              Navigator.pushNamed(
+                context,
+                ScreenLogin.routeName,
+              );
+            },
+          ),
+        ],
       ),
     );
   }
